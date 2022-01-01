@@ -1,0 +1,27 @@
+.aa {
+	right: 0.8vw;
+}
+.raper {
+	max-width: 450px;
+}
+@media screen and (max-width: 1280px) {
+	.raper {
+		transform: scale(1.03, 0.95) translateX(0%) translateY(-2%);
+	}
+}
+@media screen and (max-width: 1280px) and (max-height: 836px) {
+	.raper {
+		transform: scale(1.03, 0.8) translateX(0%) translateY(-2%);
+	}
+}
+@media screen and (max-width: 1024px) {
+	.raper {
+		transform: scale(1.03, 0.8) translateX(0%) translateY(-14%);
+	}
+}
+@media screen and (max-height: 800px) {
+	.raper {
+		max-height: 85vh;
+		max-width: 100vh;
+	}
+}
