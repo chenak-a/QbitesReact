@@ -18,6 +18,7 @@ import { withRouter } from "react-router-dom";
 import { timeFormat } from "d3-time-format";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
+import Select from 'react-select'
 import {
 	CrossHairCursor,
 	EdgeIndicator,
@@ -58,6 +59,26 @@ function Graphh(props) {
 	const [loading, setLoding] = useState(false);
 	const [price, setPrice] = useState(0);
 
+	const [selectedOption, setSelectedOption] = useState(null);
+	const [selected, setSelected] = useState([])
+	const options = [
+		{ value: 'Aroonu', label: 'Aroonu' },
+		{ value: 'Aroond', label: 'Aroond' },
+		{ value: 'rsiK', label: 'rsiK' },
+		{ value: 'Ci', label: 'Ci' },
+		{ value: 'Ambb5', label: 'Ambb5' }
+	  ]
+
+	useEffect(() =>{
+		
+		if(!selectedOption) return
+		selectedOption.map(sel=> {
+			selected.push(sel.value)
+		})
+		console.log(selected ,'selected');
+		
+		console.log(selectedOption, 'selecte')
+	}, [selectedOption]);
 	useEffect(() => {
 		loopData(props.data.data.hcl);
 	}, [props.data]);
@@ -156,8 +177,166 @@ function Graphh(props) {
 	const valuee = (e) => {
 		console.log(e.target.value);
 	};
+
+	const aroonuChart = () => {
+		return(
+
+			<>
+			<LineSeries
+								yAccessor={(d) => d.aroonu / 100}
+								stroke={"#283747"}
+								style={display17 ? { display: "none" } : { display: "" }}
+							/>
+							<SingleValueTooltip
+								onClick={() => setDisplay17(!display17)}
+								yAccessor={(d) => d.aroonu / 100}
+								yLabel={`Aroonu`}
+								valueFill="#283747"
+								yDisplayFormat={format(".2f")}
+								/* valueStroke={atr14.stroke()} - optional prop */
+								/* labelStroke="#4682B4" - optional prop */
+								origin={[-40, 3]}
+							/>
+							
+						<CurrentCoordinate
+							yAccessor={(d) => d.aroonu / 100}
+							fill={!display17 ? "#283747" : "#FFFFFF"}
+						/>
+			</>
+		)
+	}
+
+	const aroondChart = () => {
+		return (
+			<>
+			<LineSeries
+								yAccessor={(d) => d.aroond / 100}
+								stroke={"#FF4136"}
+								style={display18 ? { display: "none" } : { display: "" }}
+							/>
+							<SingleValueTooltip
+								yAccessor={(d) => d.aroond / 100}
+								valueFill="#FF4136"
+								yLabel={`Aroond`}
+								onClick={() => setDisplay18(!display18)}
+								yDisplayFormat={format(".2f")}
+								/* valueStroke={atr14.stroke()} - optional prop */
+								/* labelStroke="#4682B4" - optional prop */
+								origin={[30, 3]}
+							/>
+							<CurrentCoordinate
+								yAccessor={(d) => d.aroond / 100}
+								fill={!display18 ? "#FF4136" : "#FFFFFF"}
+							/>
+			</>
+		)
+	}
+
+	const rsikChart = () => {
+		return(
+			<>
+			<LineSeries
+				yAccessor={(d) => d.rsik / 100}
+				stroke={"#FF4136"}
+				style={display16 ? { display: "none" } : { display: "" }}
+			/>
+
+			<SingleValueTooltip
+				yAccessor={(d) => d.rsik / 100}
+				valueFill="#FF4136"
+				yLabel={`rsiK`}
+				onClick={() => setDisplay16(!display16)}
+				yDisplayFormat={format(".2f")}
+				/* valueStroke={atr14.stroke()} - optional prop */
+				/* labelStroke="#4682B4" - optional prop */
+				origin={[75, 3]}
+			/>
+			<CurrentCoordinate
+				yAccessor={(d) => d.rsik / 100}
+				fill={!display16 ? "#FF4136" : "#FFFFFF"}
+			/>
+			</>
+		)
+	}
+
+	const ambb5Chart = () => {
+		return (
+			<>
+			<LineSeries
+				yAccessor={(d) => d.ambb5}
+				stroke={"#283747"}
+				style={display14 ? { display: "none" } : { display: "" }}
+			/>
+			<SingleValueTooltip
+				onClick={() => setDisplay14(!display14)}
+				yAccessor={(d) => d.ambb5}
+				yLabel={`ambb5`}
+				valueFill="#283747"
+				yDisplayFormat={format(".2f")}
+				/* valueStroke={atr14.stroke()} - optional prop */
+				/* labelStroke="#4682B4" - optional prop */
+				origin={[-40, 3]}
+			/>
+			<CurrentCoordinate
+				yAccessor={(d) => d.ambb5}
+				fill={!display14 ? "#283747" : "#FFFFFF"}
+			/>
+			</>
+		)
+	}
+	const ciChart = () => {
+		return(
+			<>
+				<LineSeries
+					yAccessor={(d) => d.ci}
+					stroke={"#657a00"}
+					style={display15 ? { display: "none" } : { display: "" }}
+				/>
+				
+				<SingleValueTooltip
+					onClick={() => setDisplay15(!display15)}
+					yAccessor={(d) => d.ci}
+					yLabel={`ci`}
+					valueFill="#657a00"
+					yDisplayFormat={format(".2f")}
+					/* valueStroke={atr14.stroke()} - optional prop */
+					/* labelStroke="#4682B4" - optional prop */
+					origin={[30, 3]}
+				/>
+				<CurrentCoordinate
+					yAccessor={(d) => d.ci}
+					fill={!display15 ? "#657a00" : "#FFFFFF"}
+				/>
+			</>
+		)
+	}
+	const ambiChart = () => {
+
+		return(
+			<>
+
+			<LineSeries
+			yAccessor={(d) => d.ambi}
+			stroke={"#657a00"}
+			style={display2 ? { display: "none" } : { display: "" }}
+		/>
+		<SingleValueTooltip
+								onClick={() => setDisplay2(!display2)}
+								yAccessor={(d) => d.ambi}
+								yLabel={`ambi`}
+								yDisplayFormat={format(".2f")}
+								valueFill="#657a00"
+								origin={[30, 3]}
+							/>
+			</>
+		)
+	}
+	
 	return (
+		<>
 		<div className="raper">
+			
+
 			{loading && data !== null ? (
 				<ChartCanvas
 					className="aa"
@@ -264,7 +443,7 @@ function Graphh(props) {
 							valueFill="#283747"
 							origin={[-40, 3]}
 						/>
-
+						{/* {ambiChart()} */}
 						<SingleValueTooltip
 							onClick={() => setDisplay2(!display2)}
 							yAccessor={(d) => d.ambi}
@@ -547,65 +726,9 @@ function Graphh(props) {
 						padding={{ top: 10, bottom: 10 }}
 					>
 						<YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
-
-						<LineSeries
-							yAccessor={(d) => d.ambb5}
-							stroke={"#283747"}
-							style={display14 ? { display: "none" } : { display: "" }}
-						/>
-						<LineSeries
-							yAccessor={(d) => d.ci}
-							stroke={"#657a00"}
-							style={display15 ? { display: "none" } : { display: "" }}
-						/>
-						<LineSeries
-							yAccessor={(d) => d.rsik / 100}
-							stroke={"#FF4136"}
-							style={display16 ? { display: "none" } : { display: "" }}
-						/>
-
-						<SingleValueTooltip
-							onClick={() => setDisplay14(!display14)}
-							yAccessor={(d) => d.ambb5}
-							yLabel={`ambb5`}
-							valueFill="#283747"
-							yDisplayFormat={format(".2f")}
-							/* valueStroke={atr14.stroke()} - optional prop */
-							/* labelStroke="#4682B4" - optional prop */
-							origin={[-40, 3]}
-						/>
-						<SingleValueTooltip
-							onClick={() => setDisplay15(!display15)}
-							yAccessor={(d) => d.ci}
-							yLabel={`ci`}
-							valueFill="#657a00"
-							yDisplayFormat={format(".2f")}
-							/* valueStroke={atr14.stroke()} - optional prop */
-							/* labelStroke="#4682B4" - optional prop */
-							origin={[30, 3]}
-						/>
-						<SingleValueTooltip
-							yAccessor={(d) => d.rsik / 100}
-							valueFill="#FF4136"
-							yLabel={`rsiK`}
-							onClick={() => setDisplay16(!display16)}
-							yDisplayFormat={format(".2f")}
-							/* valueStroke={atr14.stroke()} - optional prop */
-							/* labelStroke="#4682B4" - optional prop */
-							origin={[75, 3]}
-						/>
-						<CurrentCoordinate
-							yAccessor={(d) => d.ambb5}
-							fill={!display14 ? "#283747" : "#FFFFFF"}
-						/>
-						<CurrentCoordinate
-							yAccessor={(d) => d.ci}
-							fill={!display15 ? "#657a00" : "#FFFFFF"}
-						/>
-						<CurrentCoordinate
-							yAccessor={(d) => d.rsik / 100}
-							fill={!display16 ? "#FF4136" : "#FFFFFF"}
-						/>
+						{rsikChart()}
+						{ambb5Chart()}
+						{ciChart()}
 						<XAxis
 							axisAt="bottom"
 							orient="bottom"
@@ -619,6 +742,7 @@ function Graphh(props) {
 							displayFormat={format(".2f")}
 						/>
 					</Chart>
+					
 					<Chart
 						id={6}
 						yExtents={(d) => d.aroonu / 100}
@@ -628,46 +752,23 @@ function Graphh(props) {
 					>
 						<YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
 
-						<LineSeries
-							yAccessor={(d) => d.aroonu / 100}
-							stroke={"#283747"}
-							style={display17 ? { display: "none" } : { display: "" }}
-						/>
-						<LineSeries
-							yAccessor={(d) => d.aroond / 100}
-							stroke={"#FF4136"}
-							style={display18 ? { display: "none" } : { display: "" }}
-						/>
-						<SingleValueTooltip
-							onClick={() => setDisplay17(!display17)}
-							yAccessor={(d) => d.aroonu / 100}
-							yLabel={`Aroonu`}
-							valueFill="#283747"
-							yDisplayFormat={format(".2f")}
-							/* valueStroke={atr14.stroke()} - optional prop */
-							/* labelStroke="#4682B4" - optional prop */
-							origin={[-40, 3]}
-						/>
+						{aroonuChart()}
+						{aroondChart()}
 
-						<SingleValueTooltip
-							yAccessor={(d) => d.aroond / 100}
-							valueFill="#FF4136"
-							yLabel={`Aroond`}
-							onClick={() => setDisplay18(!display18)}
-							yDisplayFormat={format(".2f")}
-							/* valueStroke={atr14.stroke()} - optional prop */
-							/* labelStroke="#4682B4" - optional prop */
-							origin={[30, 3]}
-						/>
-						<CurrentCoordinate
-							yAccessor={(d) => d.aroonu / 100}
-							fill={!display17 ? "#283747" : "#FFFFFF"}
-						/>
-						<CurrentCoordinate
-							yAccessor={(d) => d.aroond / 100}
-							fill={!display18 ? "#FF4136" : "#FFFFFF"}
-						/>
+						{	selected.includes('rsiK') ? (
+							rsikChart()
+						) : ("")
+						}
 
+						{	selected.includes('Ambb5') ? (
+							ambb5Chart()
+						) : ("")
+						}
+						
+						{	selected.includes('Ci') ? (
+							ciChart()
+						) : ("")
+						}
 						<XAxis
 							axisAt="bottom"
 							orient="bottom"
@@ -691,7 +792,19 @@ function Graphh(props) {
 			) : (
 				""
 			)}
+			
 		</div>
+		<div className="select">
+				<Select
+					closeMenuOnSelect={false}
+					defaultValue={[options[0], options[1]]}
+					isMulti
+					options={options}
+					
+					onChange={setSelectedOption}
+				/>
+			</div>
+		</>
 	);
 }
 
