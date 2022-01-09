@@ -158,7 +158,7 @@ export default function Dashboard() {
 				/>
 			</Card>
 
-			<div className="w-100 text-center mt-2">
+			<div className="h-75 d-inline-block w-100 text-center mt-2">
 				<div>
 					<pre>
 						{data == null
