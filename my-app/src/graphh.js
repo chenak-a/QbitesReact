@@ -287,7 +287,7 @@ function Graphh(props) {
 					</Chart>
 					<Chart
 						id={2}
-						yExtents={(d) => d.amb0}
+						yExtents={(d) => d.amb99}
 						height={90}
 						origin={(w, h) => [0, h - 650]}
 						padding={{ top: 15, bottom: 15 }}

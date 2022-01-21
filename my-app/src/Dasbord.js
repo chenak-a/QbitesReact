@@ -105,11 +105,15 @@ export default function Dashboard() {
 		}
 	}
 	useEffect(() => {
-		const interval = setInterval(() => {
-			refresh();
+		if (result.fetching) return;
+
+		// Set up to refetch in one second, if the query is idle
+		const timerId = setTimeout(() => {
+			reexecuteQuery({ requestPolicy: 'network-only' });
 		}, 1000);
-		return () => clearInterval(interval);
-	});
+
+		return () => clearTimeout(timerId);
+	}, [result.fetching, reexecuteQuery]);
 	/*     <AdBlockDetectedWrapper>
               <div>{"please disable adblock"}</div>
           </AdBlockDetectedWrapper> */
@@ -126,7 +130,7 @@ export default function Dashboard() {
 				<Card.Body>
 					<div></div>
 					<h2 className="text-center mb-1   ">
-						{!fetching && data != null
+						{ data != null
 							? data.crypto.map((data) => data.name + " " + data.time)
 							: "Profile"}
 					</h2>
