@@ -85,12 +85,10 @@ export default function Dashboard() {
 	});
 	const { data, fetching, err } = result;
 
-	const refresh = () => {
-		// Refetch the query and skip the cache
-		reexecuteQuery({ requestPolicy: "cache-and-network" });
-	};
+
 
 	const [error, setError] = useState("");
+	const [oldData, setOld] = useState(result);
 	const { currentUser, logout } = useAuth();
 	const history = useHistory();
 
@@ -105,15 +103,18 @@ export default function Dashboard() {
 		}
 	}
 	useEffect(() => {
-		if (result.fetching) return;
+			if (result.fetching) ;
 
-		// Set up to refetch in one second, if the query is idle
-		const timerId = setTimeout(() => {
-			reexecuteQuery({ requestPolicy: 'network-only' });
-		}, 1000);
+			// Set up to refetch in one second, if the query is idle
+			const timerId = setTimeout(() => {
+				reexecuteQuery({requestPolicy: 'network-only'});
 
-		return () => clearTimeout(timerId);
-	}, [result.fetching, reexecuteQuery]);
+			}, 100);
+
+
+			return () => clearTimeout(timerId);
+		},
+		[result.fetching, reexecuteQuery]);
 	/*     <AdBlockDetectedWrapper>
               <div>{"please disable adblock"}</div>
           </AdBlockDetectedWrapper> */
@@ -166,8 +167,14 @@ export default function Dashboard() {
 				<div>
 					<pre>
 						{!data
-							? "loading"
-							: data.crypto.map((data) => (
+							?  ( oldData ? oldData.data.crypto.map((data) => (
+								<Graphs
+									style={{ transition: "scale 1s" }}
+									key="{data}"
+									data={data}
+								/>
+							)): "string")
+							: result.data.crypto.map((data) => (
 									<Graphs
 										style={{ transition: "scale 1s" }}
 										key="{data}"

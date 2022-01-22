@@ -394,6 +394,7 @@ function Graphh(props) {
 								edgeAt="right"
 								yAccessor={(d) => d.close}
 								fill={(d) => (d.close > d.open ? "#6BA583" : "#FF0000")}
+								displayFormat={format(".3f")}
 							/>
 						)}
 						{price > 1000 || price < 0.01 ? (
@@ -406,7 +407,7 @@ function Graphh(props) {
 							<MouseCoordinateY
 								at="right"
 								orient="right"
-								displayFormat={format(".2f")}
+								displayFormat={format(".3f")}
 							/>
 						)}
 					</Chart>
