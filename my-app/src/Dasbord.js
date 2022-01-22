@@ -103,13 +103,15 @@ export default function Dashboard() {
 		}
 	}
 	useEffect(() => {
-			if (result.fetching) ;
+			if (!result.fetching) {
+				setOld(result);
+			};
 
 			// Set up to refetch in one second, if the query is idle
 			const timerId = setTimeout(() => {
 				reexecuteQuery({requestPolicy: 'network-only'});
 
-			}, 100);
+			}, 1000);
 
 
 			return () => clearTimeout(timerId);
@@ -167,13 +169,13 @@ export default function Dashboard() {
 				<div>
 					<pre>
 						{!data
-							?  ( oldData ? oldData.data.crypto.map((data) => (
+							?  ( oldData.data  ? oldData.data.crypto.map((data) => (
 								<Graphs
 									style={{ transition: "scale 1s" }}
 									key="{data}"
 									data={data}
 								/>
-							)): "string")
+							)): "Loding ...")
 							: result.data.crypto.map((data) => (
 									<Graphs
 										style={{ transition: "scale 1s" }}
