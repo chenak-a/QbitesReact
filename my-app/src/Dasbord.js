@@ -134,8 +134,8 @@ export default function Dashboard() {
 				<Card.Body>
 					<div></div>
 					<h2 className="text-center mb-1   ">
-						{ data != null
-							? data.crypto.map((data) => data.name + " " + data.time)
+						{ oldData
+							? oldData.data.crypto.map((data) => data.name + " " + data.time)
 							: "Profile"}
 					</h2>
 					{error && <Alert variant="danger">{error}</Alert>}
