@@ -88,7 +88,7 @@ export default function Dashboard() {
 
 
 	const [error, setError] = useState("");
-	const [oldData, setOld] = useState(result);
+	const [oldData, setOld] = useState();
 	const { currentUser, logout } = useAuth();
 	const history = useHistory();
 
@@ -103,12 +103,13 @@ export default function Dashboard() {
 		}
 	}
 	useEffect(() => {
-			if (!result.fetching) {
+			if(result.data){
 				setOld(result);
-			};
+			}
 
 			// Set up to refetch in one second, if the query is idle
 			const timerId = setTimeout(() => {
+
 				reexecuteQuery({requestPolicy: 'network-only'});
 
 			}, 1000);
@@ -168,21 +169,14 @@ export default function Dashboard() {
 			<div className="h-75 d-inline-block w-100 text-center mt-2">
 				<div>
 					<pre>
-						{!data
-							?  ( oldData.data  ? oldData.data.crypto.map((data) => (
+						{ oldData   ? oldData.data.crypto.map((data) => (
 								<Graphs
 									style={{ transition: "scale 1s" }}
 									key="{data}"
 									data={data}
 								/>
-							)): "Loding ...")
-							: result.data.crypto.map((data) => (
-									<Graphs
-										style={{ transition: "scale 1s" }}
-										key="{data}"
-										data={data}
-									/>
-							  ))}
+							)): "Loding ..."
+							}
 					</pre>
 				</div>
 			</div>

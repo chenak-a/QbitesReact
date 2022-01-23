@@ -157,6 +157,7 @@ function Graphh(props) {
 				tickStrokeDasharray: "Solid",
 				tickStrokeOpacity: 0.2,
 				tickStrokeWidth: 1.2,
+
 		  }
 		: {};
 
@@ -348,7 +349,7 @@ function Graphh(props) {
 					seriesName="MSFT"
 					data={data}
 					xAccessor={(d) => d.date}
-					xScale={scaleTime(Date.now())}
+					xScale={scaleTime(timeFormat("%Y-%m-%d %H:%M"))}
 					xExtents={xExtents}
 				>
 					<Chart
@@ -376,7 +377,7 @@ function Graphh(props) {
 							showTicks={false}
 						/>
 
-						<CandlestickSeries width={timeIntervalBarWidth(utcHour.every(4))} />
+						<CandlestickSeries width={timeIntervalBarWidth(utcHour.every(1))} />
 						<OHLCTooltip origin={[-40, 8]} />
 						{price > 1000 || price < 0.01 ? (
 							<EdgeIndicator
@@ -777,10 +778,12 @@ function Graphh(props) {
 							{...xGrid}
 						/>
 						<MouseCoordinateX
+
 							at="bottom"
 							orient="bottom"
-							opacity={2}
-							displayFormat={timeFormat("%Y-%m-%d")}
+							usingProps={{width :1000}}
+							displayFormat={timeFormat("%m-%d %H:%M")}
+
 						/>
 						<MouseCoordinateY
 							at="right"
