@@ -1,5 +1,5 @@
 import "./App.css";
-import { Container } from "react-bootstrap";
+
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -14,7 +14,7 @@ import Pagenotfound from "./Pagenotfound";
 import { Provider } from "urql";
 import { client } from "../src/urqlClient";
 function App() {
-	//<Container>
+
 	return (
 		<div>
 			
@@ -23,7 +23,7 @@ function App() {
 					<Provider value={client}>
 						<Switch>
 							<Route path="/" exact component={Home} />
-							<Container><Route path="/:id" exact component={Dasbord}/></Container>
+							<Route path="/:id" exact component={Dasbord}/>
 							
 							<Route path="*" component={Pagenotfound} />
 						</Switch>

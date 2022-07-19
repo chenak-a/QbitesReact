@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
-import "./graphh.css";
+import "./Graph.css";
 import { format } from "d3-format";
 import { OHLCTooltip, SingleValueTooltip } from "react-stockcharts/lib/tooltip";
 import { FormControl } from "react-bootstrap";
@@ -34,7 +34,9 @@ import {
 	sellPath,
 } from "react-stockcharts/lib/annotation";
 
-function Graphh(props) {
+function Graph(props) {
+	
+
 	const [display1, setDisplay1] = useState();
 	const [display2, setDisplay2] = useState();
 	const [display3, setDisplay3] = useState();
@@ -58,29 +60,49 @@ function Graphh(props) {
 	const [hight, setHight] = useState();
 	const [loading, setLoding] = useState(false);
 	const [price, setPrice] = useState(0);
+	const initialdata = props.data
+	
 
-	const [selectedOption, setSelectedOption] = useState(null);
-	const [selected, setSelected] = useState([])
-	const options = [
-		{ value: 'Aroonu', label: 'Aroonu' },
-		{ value: 'Aroond', label: 'Aroond' },
-		{ value: 'rsiK', label: 'rsiK' },
-		{ value: 'Ci', label: 'Ci' },
-		{ value: 'Ambb5', label: 'Ambb5' }
-	  ]
-
-	useEffect(() =>{
-		
-		if(!selectedOption) return
-		selectedOption.map(sel=> {
-			selected.push(sel.value)
-		})
-		console.log(selected ,'selected');
-		
-		console.log(selectedOption, 'selecte')
-	}, [selectedOption]);
 	useEffect(() => {
-		loopData(props.data.data.hcl);
+		var array = [];
+		console.log(initialdata)
+	
+		for (var value of initialdata.data){
+			console.log(value)
+			array.push({
+				date: new Date(value.hcl.opentime),
+				open: value.hcl.Open,
+				high: value.hcl.High,
+				low: value.hcl.Low,
+				close: value.hcl.Close,
+				volume: value.hcl.Volume,
+				buy2: value.ai.bigmome.BUY2,
+				ambi: value.ai.bigmome.ambi,
+				amb0: value.ai.sell.amb0,
+				amb1: value.ai.sell.amb1,
+				amb2: value.ai.sell.amb2,
+				amb3: value.ai.sell.amb3,
+				amb99: value.ai.sell.amb99,
+				amb13: value.ai.mome.amb13,
+				amb14: value.ai.mome.amb14,
+				amb15: value.ai.mome.amb15,
+				amb55: value.ai.mome.amb55,
+				ci: value.ai.smallmome.ci,
+				rsik: value.formula.rsiK,
+				aroonu: value.formula.aroonu,
+				aroond: value.formula.aroond,
+				macd: value.formula.macd,
+				histogram: value.formula.histogram,
+				ambb5: value.ai.buy.ambb5,
+				BUYSELL: value.ai.other.BUYSELL,
+
+			})
+		}
+		setData(array);
+		setWidth(window.innerWidth);
+		setLoding(true);
+		setPrice(initialdata.data[initialdata.data.length-1].hcl.Close);
+
 	}, [props.data]);
 	const macdAppearance = {
 		stroke: {
@@ -91,44 +113,7 @@ function Graphh(props) {
 		},
 	};
 
-	const loopData = (hcl) => {
-		var array = [];
-		var OpenLen = hcl.Open.length;
-		//props.data.data.
-		for (var i = 0; i < OpenLen; i++) {
-			array.push({
-				date: new Date(hcl.opentime[i]),
-				open: hcl.Open[i],
-				high: hcl.High[i],
-				low: hcl.Low[i],
-				close: hcl.Close[i],
-				volume: hcl.Volume[i],
-				buy2: props.data.data.ai.bigmome.BUY2[i],
-				ambi: props.data.data.ai.bigmome.ambi[i],
-				amb0: props.data.data.ai.sell.amb0[i],
-				amb1: props.data.data.ai.sell.amb1[i],
-				amb2: props.data.data.ai.sell.amb2[i],
-				amb3: props.data.data.ai.sell.amb3[i],
-				amb99: props.data.data.ai.sell.amb99[i],
-				amb13: props.data.data.ai.mome.amb13[i],
-				amb14: props.data.data.ai.mome.amb14[i],
-				amb15: props.data.data.ai.mome.amb15[i],
-				amb55: props.data.data.ai.mome.amb55[i],
-				ci: props.data.data.ai.smallmome.ci[i],
-				rsik: props.data.data.formula.rsiK[i],
-				aroonu: props.data.data.formula.aroonu[i],
-				aroond: props.data.data.formula.aroond[i],
-				macd: props.data.data.formula.macd[i],
-				histogram: props.data.data.formula.histogram[i],
-				ambb5: props.data.data.ai.buy.ambb5[i],
-				BUYSELL: props.data.data.ai.other.BUYSELL[i],
-			});
-		}
-		setData(array);
-		setWidth(window.innerWidth);
-		setLoding(true);
-		setPrice(props.data.data.hcl.Close[0]);
-	};
+	
 
 	const longAnnotationProps = {
 		y: ({ yScale, datum }) => yScale(datum.low),
@@ -166,7 +151,7 @@ function Graphh(props) {
 		setHight(window.innerHeight);
 	});
 
-	// console.log(new Date(props.data.data.hcl.opentime[0]))
+	// console.log(new Date(value.data.hcl.opentime[0]))
 
 	const xAccessor = (d) => {
 		if (d != null) {
@@ -341,7 +326,7 @@ function Graphh(props) {
 			{loading && data !== null ? (
 				<ChartCanvas
 					className="aa"
-					height={945}
+					height={window.innerHeight}
 					margin={{ left: 80, right: 100, top: 10, bottom: 30 }}
 					width={width}
 					onChange={"resize"}
@@ -595,7 +580,7 @@ function Graphh(props) {
 						/>
 						<LineSeries
 							yAccessor={(d) => d.amb55}
-							stroke={"#7FDBFF"}
+							stroke={"#b14fee"}
 							style={display11 ? { display: "none" } : { display: "" }}
 						/>
 
@@ -754,6 +739,9 @@ function Graphh(props) {
 					>
 						<YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
 
+						{aroonuChart()}
+						{aroondChart()}
+
 						
 						<XAxis
 							axisAt="bottom"
@@ -787,4 +775,4 @@ function Graphh(props) {
 	);
 }
 
-export default Graphh;
+export default Graph;
