@@ -137,7 +137,7 @@ function Cryptoli(props) {
           
             ) : (
            
-                <Button href={`/${item.name}`} size="small" style={{ backgroundColor: "green" , color: "white",borderRadius:"18px"}} variant="contained" color="error">
+                <Button href={`/${item.name}`} size="small" style={{ backgroundColor: "green" , color: "white",borderRadius:"18px"}} variant="contained">
                   Trade
                 </Button>
              
