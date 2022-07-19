@@ -1,64 +1,97 @@
-import React, { Component } from "react";
-
-import { Link, useHistory } from "react-router-dom";
-import sample from "./images/video (1).mp4";
+import  React,{ useEffect ,useState} from 'react';
 import "./Home.css";
-import Typical from "react-typical";
-import { Button } from "react-bootstrap";
-class Home extends Component {
+import {
+    List,
+    Input,
+  } from "antd";
+import "antd/dist/antd.css";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import Cryptoli from './Cryptoli';
+import { useQuery } from 'urql';
 
-	constructor(props) {
-		super(props);
-		this.state = { showResults: false };
 
-		this.handleClick = this.handleClick.bind(this);
-	}
-
-	handleClick(e) {
-		e.preventDefault();
-		if (this.state.showResults === false) this.setState({ showResults: true });
-		else {
-			this.setState({ showResults: false });
-		}
-	}
-	render() {
-		return (
-			<div>
-				<video className="myVideo" autoPlay loop muted>
-					<source src={sample} type="video/mp4" />
-				</video>
-				<div className="container">
-					<div class="wrap" style={{ color: "white" }}>
-						<div
-							class="text"
-							style={{ color: "white", minWidth: "20vh" }}
-							data-text="GLITCH"
-						>
-							{" "}
-							Qbites
-						</div>
-					</div>
-					<div className="commente">
-						<Typical
-							className="comm"
-							steps={[
-								"",
-								1000,
-								"Trade with first class artificial intelligence with Ai based indicators at your disposal ",
-								100000,
-							]}
-							loop={Infinity}
-							wrapper="h2"
-						/>
-					</div>
-					<div className="bot">
-						<Link to="/cryptocurrency">
-							<Button className="botin"> start </Button>{" "}
-						</Link>
-					</div>
-				</div>
-			</div>
-		);
-	}
+const QueryAllcrypto = `
+query{
+    Allcrypto
 }
+`;
+
+ 
+function Home() {
+    const [dataFragment, setDataFragment] = useState([]);
+    const [datavisible, setDatavisible] = useState([]);
+    const [filter,setFilter] =  useState("");
+    
+    const [result, reexecuteQuery] = useQuery({
+        query: QueryAllcrypto,
+       
+      });
+    const { data, fetching } = result;
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        setFilter(e.target.value)
+        filterdata()
+
+    }
+    const filterdata = () => {
+        const regex = new RegExp("^"+filter, 'gi');
+        setDatavisible(dataFragment.filter(value => value.match(regex) ))
+    }
+    useEffect(() => {
+        if (fetching) return;
+        if( data){
+            setDataFragment(data.Allcrypto)
+            filterdata()
+        }
+        
+        console.log(data)
+
+        // Set up to refetch in one second, if the query is idle
+        const timerId = setTimeout(() => {
+          reexecuteQuery({ requestPolicy: 'network-only' });
+        }, 1000);
+    
+        return () => clearTimeout(timerId);
+
+      }, [fetching, reexecuteQuery]);
+      
+
+
+
+
+
+    
+
+    return (
+        <div className="Home" id="Home">
+        
+        <div className="profil1e" id="profil1e">  <div className="addresscontract" id="addresscontract"></div></div>
+
+        <div className="contenant" id="contenant">
+        <div className="contenanttable" >
+          <Fab className="add" color="primary" aria-label="add">
+            {" "}
+            <AddIcon />
+          </Fab>
+          <div className="infinite-container">
+            <div className="search">
+              <Input
+                className="SE"
+                placeholder="Search"
+                onChange={handleChange}
+              />
+            </div>
+            <List
+            
+             
+            >{ datavisible ? datavisible.map(cyptoname => (<Cryptoli key={cyptoname} name={cyptoname} />)):<p>b</p>}</List>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+}
+
 export default Home;
