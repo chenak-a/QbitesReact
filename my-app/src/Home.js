@@ -46,7 +46,7 @@ function Home() {
             filterdata()
         }
         
-        console.log(data)
+       
 
         // Set up to refetch in one second, if the query is idle
         const timerId = setTimeout(() => {

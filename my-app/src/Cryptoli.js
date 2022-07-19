@@ -26,8 +26,9 @@ query ($name: String!) {
   }
 `;
 function Cryptoli(props) {
-  const prevCountRef = useRef();
+ 
   const [item, setItem] = useState();
+  const [previesPrice, setPreviesPrice] = useState();
 
 
   const [result, reexecuteQuery] = useQuery({
@@ -50,11 +51,13 @@ function Cryptoli(props) {
           D: data.crypto.gainlose.D,
         },
       };
-      prevCountRef.current = newvalue;
+      setPreviesPrice(data.crypto.data[result.data.crypto.data.length -2].hcl.Close)
+     
+      
       setItem(newvalue);
 
-    }
-
+    }   
+  
     // Set up to refetch in one second, if the query is idle
     const timerId = setTimeout(() => {
       reexecuteQuery({ requestPolicy: "network-only" });
@@ -68,13 +71,16 @@ function Cryptoli(props) {
       if ("IOTAUSDT" === name) {
         return (
           <img
+ 
             src={require(`../node_modules/cryptocurrency-icons/svg/color/miota.svg`).default}
+            
             width={30}
           />
         );
       }
       return (
         <img
+          
           src={require(`../node_modules/cryptocurrency-icons/svg/color/${name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
           }`).default}
           width={30}
@@ -83,6 +89,7 @@ function Cryptoli(props) {
     } catch {
       return (
         <img
+           
           src={require(`../node_modules/cryptocurrency-icons/svg/black/gold.svg`).default}
           width={30}
         />
@@ -90,8 +97,8 @@ function Cryptoli(props) {
     }
   };
   return item ? (
-    <div className="Dashbord" id="Dashbord">
-      <List.Item key={item.name}>
+    <div className="h-75 d-inline-block w-100 text-center mt-2" id="Dashbord">
+      <List.Item className="text-center" key={item.name}>
         <List.Item.Meta
           className="itemname"
           avatar={getimage(item.name)}
@@ -100,25 +107,29 @@ function Cryptoli(props) {
         />
         <List.Item.Meta
           title={<a>Price</a>}
-          description={<a>{item.price.toString()}</a>}
+          description={  <a style={previesPrice >item.price ?{color :"red"}:{color :"green"}}>{item.price.toString()}</a>}
         />
         <List.Item.Meta
           title={<a>Projection</a>}
-          description={<a>{item.projection.toString()}</a>}
+          description={<a style={item.projection <0 ?{color :"red"}:{color :"green"}}>{item.projection.toString()}</a>}
         />
         <List.Item.Meta
           title={<a>M/W/D</a>}
           description={
             <a>
-              {item.gainlose.M.toFixed(2).toString()}/
-              {item.gainlose.W.toFixed(2).toString()}/
-              {item.gainlose.D.toFixed(2).toString()}
+                <a style={item.gainlose.M <0 ?{color :"red"}:{color :"green"}}  >{item.gainlose.M.toFixed(2).toString()+"/"}</a>
+                <a style={item.gainlose.W <0 ?{color :"red"}:{color :"green"}} >{item.gainlose.W.toFixed(2).toString()+ "/"}</a>
+                <a style={item.gainlose.D <0 ?{color :"red"}:{color :"green"}} >{item.gainlose.D.toFixed(2).toString()}</a>
+            
             </a>
+      
+
+            
           }
         />
         <List.Item.Meta
           title={
-            item.projection >= 0 ? (
+            item.projection<= 0 ? (
              
                 <Button href={`/${item.name}`} size="small" style={{ backgroundColor: "red" , color: "white", borderRadius:"18px"}} variant="contained" >
                   Trade

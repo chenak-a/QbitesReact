@@ -65,10 +65,10 @@ function Graph(props) {
 
 	useEffect(() => {
 		var array = [];
-		console.log(initialdata)
+
 	
 		for (var value of initialdata.data){
-			console.log(value)
+			
 			array.push({
 				date: new Date(value.hcl.opentime),
 				open: value.hcl.Open,

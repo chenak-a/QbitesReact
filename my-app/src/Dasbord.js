@@ -80,10 +80,10 @@ query ($name: String!){
   }
 
 `
-function Dashbord(props) {
+function Dashbord() {
   const { id } = useParams()
   
-    const [nameCypto, setNameCypto] = useState(String(id).toUpperCase());
+    const nameCypto = String(id).toUpperCase();
  
     const [oldData, setOld] = useState();
     const [result, reexecuteQuery] = useQuery({
@@ -112,7 +112,7 @@ function Dashbord(props) {
        
     
     }, [fetching,reexecuteQuery]);
-	console.log(oldData)
+
 
 	
 
