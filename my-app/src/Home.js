@@ -6,25 +6,7 @@ import "./Home.css";
 import Typical from "react-typical";
 import { Button } from "react-bootstrap";
 class Home extends Component {
-	/*  <div id="op">
-                        <div className="d-flex align-items-center justify-content-center"
-                            style={{ minHeight: "110vh" }} id="in"  >
-                            <div className="w-100" style={{ maxWidth: "400px" }}>
-                                <div >
-                                    {!this.state.showResults ? <Signin /> : null}
-                                    <div className="w-100 text-center mt-2" style={this.state.showResults ? { display: 'none' } : { position: "relative", color: "white" }} >
-                                        Need an account? <Link onClick={this.handleClick} >Sign Up</Link>
-                                    </div>
-                                </div>
-                                <div>
-                                    {this.state.showResults ? <Signup handle={this.handleClick} /> : null}
-                                    <div className="w-100 text-center mt-2" style={this.state.showResults ? { position: "relative", color: "white" } : { display: 'none' }}>
-                                        Already have an account? <Link onClick={this.handleClick} >Log In</Link>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */
+
 	constructor(props) {
 		super(props);
 		this.state = { showResults: false };
