@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
-import { useAuth } from "./AuthContexte";
+
 import { Link, useHistory } from "react-router-dom";
 import { useQuery } from "urql";
 import { client, ssrCache } from "./urqlClient";
 import Graphs from "./graphh";
 import { TypeChooser } from "react-stockcharts/lib/helper";
-import { useDetectAdBlock } from "adblock-detect-react";
-import { AdBlockDetectedWrapper } from "adblock-detect-react";
+
+
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import { Alert } from "antd";
@@ -78,7 +78,7 @@ query {
 }
 `;
 export default function Dashboard() {
-	const adBlockDetected = useDetectAdBlock();
+	
 
 	const [result, reexecuteQuery] = useQuery({
 		query: TodosQuery,
@@ -89,14 +89,14 @@ export default function Dashboard() {
 
 	const [error, setError] = useState("");
 	const [oldData, setOld] = useState();
-	const { currentUser, logout } = useAuth();
+
 	const history = useHistory();
 
 	async function handleLogout() {
 		setError("");
 
 		try {
-			await logout();
+			
 			history.push("/");
 		} catch {
 			setError("Failed to log out");
@@ -118,9 +118,7 @@ export default function Dashboard() {
 			return () => clearTimeout(timerId);
 		},
 		[result.fetching, reexecuteQuery]);
-	/*     <AdBlockDetectedWrapper>
-              <div>{"please disable adblock"}</div>
-          </AdBlockDetectedWrapper> */
+
 	return (
 		<>
 			<Card>

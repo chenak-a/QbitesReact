@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import Signup from "./Signup";
-import Signin from "./Signin";
+
 import { Link, useHistory } from "react-router-dom";
 import sample from "./images/video (1).mp4";
 import "./Home.css";

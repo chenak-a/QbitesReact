@@ -6,26 +6,21 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	Redirect,
+	
 } from "react-router-dom";
 import React, { Component } from "react";
-import { AuthProvider } from "./AuthContexte";
+
 import Dasbord from "./Dasbord";
-import PrivetRoute from "./PriveteRoute";
-import ForgotPassword from "./ForgotPassword";
+
 import Pagenotfound from "./Pagenotfound";
 import { Provider } from "urql";
-import { client, ssrCache } from "../src/urqlClient";
+import { client } from "../src/urqlClient";
 
-class App extends Component {
-	/*       <Route path="/auth" component={Home} />
-                <Route path="/ForgotPassword" component={ForgotPassword} />
-                
-                <Provider value={client}><PrivetRoute path="/" component={dasbord} /></Provider>
-                 */
-	render() {
-		return (
-			<AuthProvider>
+
+function App() {
+	return (
+		<div>
+			
 				<Container>
 					<Router>
 						<Switch>
@@ -39,9 +34,9 @@ class App extends Component {
 						</Switch>
 					</Router>
 				</Container>
-			</AuthProvider>
-		);
-	}
+	
+		</div>
+	);
 }
 
 export default App;

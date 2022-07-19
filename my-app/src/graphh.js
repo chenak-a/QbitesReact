@@ -18,7 +18,7 @@ import { withRouter } from "react-router-dom";
 import { timeFormat } from "d3-time-format";
 import * as d3 from "d3";
 import { Link } from "react-router-dom";
-import Select from 'react-select'
+
 import {
 	CrossHairCursor,
 	EdgeIndicator,
@@ -754,23 +754,7 @@ function Graphh(props) {
 					>
 						<YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
 
-						{aroonuChart()}
-						{aroondChart()}
-
-						{	selected.includes('rsiK') ? (
-							rsikChart()
-						) : ("")
-						}
-
-						{	selected.includes('Ambb5') ? (
-							ambb5Chart()
-						) : ("")
-						}
 						
-						{	selected.includes('Ci') ? (
-							ciChart()
-						) : ("")
-						}
 						<XAxis
 							axisAt="bottom"
 							orient="bottom"
@@ -798,16 +782,7 @@ function Graphh(props) {
 			)}
 			
 		</div>
-		<div className="select">
-				<Select
-					closeMenuOnSelect={false}
-					defaultValue={[options[0], options[1]]}
-					isMulti
-					options={options}
-					
-					onChange={setSelectedOption}
-				/>
-			</div>
+
 		</>
 	);
 }
