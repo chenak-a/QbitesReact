@@ -1,183 +1,154 @@
-import React, { useState, useEffect } from "react";
-import { Card, Button } from "react-bootstrap";
-
-import { Link, useHistory } from "react-router-dom";
+import React ,{ useState, useEffect } from "react";
 import { useQuery } from "urql";
-import { client, ssrCache } from "./urqlClient";
-import Graphs from "./graphh";
-import { TypeChooser } from "react-stockcharts/lib/helper";
+import { useHistory ,useParams } from 'react-router-dom';
+import { Card, Button } from "react-bootstrap";
+import Graph from "./Graph";
 
 
-import ReactDOM from "react-dom";
-import "antd/dist/antd.css";
-import { Alert } from "antd";
-import TextLoop from "react-text-loop";
 
-const TodosQuery = `
-query {
-  crypto {
-    name
-    time
-		data{
-    hcl{
-      opentime
-      Open
-      High
-      Low
-      Close
-    	Volume
-      
-    }
-      formula{
-        rsi
-        rsiK
-        rsiD
-        aroonu
-        aroond
-        macd
-        histogram
-       
+const allDataCrypto = `
+query ($name: String!){
+    crypto(name: $name){
+      name
+      time
+          data{
+      hcl{
+        opentime
+        Open
+        High
+        Low
+        Close
+          Volume
+        
+        
       }
-      ai{
-        bigmome{
-          BUY2
-          BUY1
-          ambi
+        formula{
+          rsi
+          rsiK
+          rsiD
+          aroonu
+          aroond
+          macd
+          histogram
+         
         }
-        sell{
-          amb0
-          amb1
-          amb2
-          amb3
-          amb99
-        }
-        smallmome{
-          amo
-          ci
-        }
-        buy{
-          ambb
-          ambb5
-          ww6
-          ww7
-        }
-        mome{
-          amb14
-          amb15
-          amb13
-          amb55
-        }
-        other{
-          amo
-          amo1
-          BUYSELL
+        ai{
+          bigmome{
+            BUY2
+            BUY1
+            ambi
+            
+          }
+          sell{
+            amb0
+            amb1
+            amb2
+            amb3
+            amb99
+            
+          }
+          smallmome{
+            amo
+            ci
+            
+          }
+          buy{
+            ambb
+            ambb5
+            ww6
+            ww7
+            
+          }
+          mome{
+            amb14
+            amb15
+            amb13
+            amb55
+            
+          }
+          other{
+            amo
+            amo1
+            BUYSELL
+            BUYSELLevel
+            
+          }
+          
         }
       }
     }
   }
-}
-`;
-export default function Dashboard() {
+
+`
+function Dashbord(props) {
+  const { id } = useParams()
+  
+    const [nameCypto, setNameCypto] = useState(String(id).toUpperCase());
+ 
+    const [oldData, setOld] = useState();
+    const [result, reexecuteQuery] = useQuery({
+      query: allDataCrypto,
+      variables:{name:nameCypto}
+      });
+    const { data, fetching ,error} = result;
+    
+
+  const navigate = useHistory()
+
+  
+    useEffect(() => {
+        if (fetching ) return;
+        if(error) navigate.push("/")
+        if(data) setOld(data.crypto);
+ 
+    
+        
+        const timerId = setTimeout(() => {
+
+            reexecuteQuery({requestPolicy: 'network-only'});
+
+        }, 1000);
+        return () => clearTimeout(timerId);
+       
+    
+    }, [fetching,reexecuteQuery]);
+	console.log(oldData)
+
 	
 
-	const [result, reexecuteQuery] = useQuery({
-		query: TodosQuery,
-	});
-	const { data, fetching, err } = result;
 
+    return (
 
-
-	const [error, setError] = useState("");
-	const [oldData, setOld] = useState();
-
-	const history = useHistory();
-
-	async function handleLogout() {
-		setError("");
-
-		try {
-			
-			history.push("/");
-		} catch {
-			setError("Failed to log out");
-		}
-	}
-	useEffect(() => {
-			if(result.data){
-				setOld(result);
-			}
-
-			// Set up to refetch in one second, if the query is idle
-			const timerId = setTimeout(() => {
-
-				reexecuteQuery({requestPolicy: 'network-only'});
-
-			}, 1000);
-
-
-			return () => clearTimeout(timerId);
-		},
-		[result.fetching, reexecuteQuery]);
-
-	return (
-		<>
-			<Card>
-				<Alert
-					style={{ position: "absolute", width: "100%" }}
-					message="This Demo is only for demonstration purposes trade at your own risk"
-					type="info"
-					closeText="Close Now"
-				/>
-
-				<Card.Body>
-					<div></div>
+        <div >
+        <Card.Body>
+					
 					<h2 className="text-center mb-1   ">
 						{ oldData
-							? oldData.data.crypto.map((data) => data.name + " " + data.time)
+							? oldData.name + " " +oldData.time
 							: "Profile"}
 					</h2>
-					{error && <Alert variant="danger">{error}</Alert>}
+				
 
-					<div></div>
+				
 				</Card.Body>
-				<Button
-					style={{ position: "absolute", top: "30%" }}
-					variant="link"
-					onClick={handleLogout}
-				>
-					Back
-				</Button>
-				<Alert
-					banner
-					message={
-						<TextLoop mask springConfig={{ stiffness: 200, damping: 10 }}>
-							<div>Created by: Anonymous</div>
-							<div className="te">
-								Support Us with a Donation: BTC
-								1594CK3dsQvJ8cQk8g3NFNMu2YfzZ1BVxH || ETH
-								0x9092d14fd31b03ffb0f81423d2f795af6be0ef4c{" "}
-							</div>
-							<div>Good luck</div>
-							<div>Email : qbites.live@gmail.com</div>
-						</TextLoop>
-					}
-				/>
-			</Card>
-
-			<div className="h-75 d-inline-block w-100 text-center mt-2">
+    
+        <div className="h-75 d-inline-block w-100 text-center mt-2">
 				<div>
 					<pre>
-						{ oldData   ? oldData.data.crypto.map((data) => (
-								<Graphs
-									style={{ transition: "scale 1s" }}
-									key="{data}"
-									data={data}
-								/>
-							)): "Loding ..."
+						{ oldData   ?  
+				
+								<Graph
+								style={{ transition: "scale 1s" }}
+								key={oldData}
+								data={oldData}
+							/>
+							: "Loding ..."
 							}
 					</pre>
 				</div>
 			</div>
-		</>
-	);
+            </div>
+    );
 }
+
+export default Dashbord;

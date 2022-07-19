@@ -1,7 +1,5 @@
 import "./App.css";
 
-import Home from "./Home.js";
-import { Container } from "react-bootstrap";
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -9,31 +7,29 @@ import {
 	
 } from "react-router-dom";
 import React, { Component } from "react";
-
+import Home from "./Home"
 import Dasbord from "./Dasbord";
 
 import Pagenotfound from "./Pagenotfound";
 import { Provider } from "urql";
 import { client } from "../src/urqlClient";
-
-
 function App() {
+
 	return (
 		<div>
 			
-				<Container>
+			
 					<Router>
+					<Provider value={client}>
 						<Switch>
 							<Route path="/" exact component={Home} />
-							<Route path="/cryptocurrency" exact>
-								<Provider value={client}>
-									<Dasbord />
-								</Provider>
-							</Route>
+							<Route path="/:id" exact component={Dasbord}/>
+							
 							<Route path="*" component={Pagenotfound} />
 						</Switch>
+						</Provider>
 					</Router>
-				</Container>
+				
 	
 		</div>
 	);
