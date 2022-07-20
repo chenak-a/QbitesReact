@@ -14,10 +14,7 @@ import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { fitWidth } from "react-stockcharts/lib/helper";
 import { InteractiveYCoordinate } from "react-stockcharts/lib/interactive";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
-import { withRouter } from "react-router-dom";
 import { timeFormat } from "d3-time-format";
-import * as d3 from "d3";
-import { Link } from "react-router-dom";
 
 import {
   CrossHairCursor,
