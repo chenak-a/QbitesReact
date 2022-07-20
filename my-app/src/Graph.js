@@ -15,6 +15,7 @@ import { XAxis, YAxis } from "react-stockcharts/lib/axes";
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { timeFormat } from "d3-time-format";
 //cleanup
+//
 import {
   CrossHairCursor,
   EdgeIndicator,
