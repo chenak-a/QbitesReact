@@ -6,6 +6,7 @@ import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Cryptoli from "./Cryptoli";
 import { useQuery } from "urql";
+import profile from "./images/group-1.svg";
 
 const QueryAllcrypto = `
 query{
@@ -25,15 +26,15 @@ function Home() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    if( String(e.target.value).match(/[!#$%^&+*(),.?":{}<>]|\[|\]|\\|\//gim) === null ) {
+    if (
+      String(e.target.value).match(/[!#$%^&+*(),.?":{}<>]|\[|\]|\\|\//gim) ===
+      null
+    ) {
       setFilter(e.target.value);
       filterdata();
-     
-    }else{
+    } else {
       setFilter(" ");
     }
-
- 
   };
   const filterdata = () => {
     const regex = new RegExp("^" + filter, "gi");
@@ -56,18 +57,19 @@ function Home() {
 
   return (
     <div className="Home" id="Home">
-      <div className="profil1e" id="profil1e">
-        {" "}
-        <div className="addresscontract" id="addresscontract"></div>
-      </div>
+     
+      <div></div>
+      <div className="page" id="page">
+        <div className="addresscontract" id="addresscontract">
+          <div className="profileclass" id="profileclass">
+            aaaa
 
-      <div className="contenant" id="contenant">
-        <div className="contenanttable">
-          <Fab className="add" color="primary" aria-label="add">
-            {" "}
-            <AddIcon />
-          </Fab>
-          <div className="infinite-container">
+          </div>
+        </div>
+
+        <div className="contenanttable" id="contenanttable">
+        
+          <div className="infinite-container" id="infinite-container">
             <div className="search">
               <Input
                 className="SE"
@@ -85,8 +87,15 @@ function Home() {
               )}
             </List>
           </div>
+          
         </div>
       </div>
+      <div className="addconaitner" id="addconaitner">
+            <Fab className="add" id="add" color="primary" aria-label="add">
+              {" "}
+              <AddIcon />
+            </Fab>
+          </div>
     </div>
   );
 }
