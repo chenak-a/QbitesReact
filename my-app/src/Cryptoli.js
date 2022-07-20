@@ -39,7 +39,7 @@ function Cryptoli(props) {
     variables: { name: props.name },
   });
 
-  const { data, fetching } = result;
+  const { data, fetching ,error } = result;
   function padTo2Digits(num) {
     return num.toString().padStart(2, "0");
   }
@@ -59,8 +59,8 @@ function Cryptoli(props) {
     )}`;
   }
   useEffect(() => {
-    if (fetching) return;
-    if (data !== null) {
+    if (fetching || error) return;
+    if (data ) {
    
     
       let indexBUYSELLevel = data.crypto.data.length;
