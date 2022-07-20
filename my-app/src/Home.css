@@ -31,8 +31,25 @@
 
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-animation: slide-in-right 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: slide-in-right 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-right 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+}.addresscontractexit{
+  margin-top: 10vh;
+
+  
+  border-radius: 18px;
+ 
+  padding: 8px 30px;
+  margin-left: 8vw;
+
+  height: 70vh;
+  width: 95%;
+  background-color: #2B3143;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation:slide-out-right 2s cubic-bezier(.55,.085,.68,.53) both;animation:slide-out-right 2s cubic-bezier(.55,.085,.68,.53) both
+  
 }
+@-webkit-keyframes slide-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}}@keyframes slide-out-right{0%{-webkit-transform:translateX(0);transform:translateX(0);opacity:1}100%{-webkit-transform:translateX(1000px);transform:translateX(1000px);opacity:0}}
 @-webkit-keyframes slide-in-right {
   0% {
     -webkit-transform: translateX(1000px);

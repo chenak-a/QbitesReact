@@ -18,6 +18,7 @@ function Home() {
   const [dataFragment, setDataFragment] = useState([]);
   const [datavisible, setDatavisible] = useState([]);
   const [filter, setFilter] = useState("");
+  const [profile,setProfile] =useState("addresscontract");
 
   const [result, reexecuteQuery] = useQuery({
     query: QueryAllcrypto,
@@ -54,13 +55,17 @@ function Home() {
 
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery]);
+  const profilevisibility = ()=>{
+      var pr = profile === "addresscontract" ? "addresscontractexit" : "addresscontract";
+      setProfile(pr)
+    }
 
   return (
     <div className="Home" id="Home">
      
       <div></div>
       <div className="page" id="page">
-        <div className="addresscontract" id="addresscontract">
+        <div className={profile} id={profile}>
           <div className="profileclass" id="profileclass">
             aaaa
 
@@ -91,7 +96,7 @@ function Home() {
         </div>
       </div>
       <div className="addconaitner" id="addconaitner">
-            <Fab className="add" id="add" color="primary" aria-label="add">
+            <Fab className="add" id="add" color="primary" aria-label="add" onClick={profilevisibility} >
               {" "}
               <AddIcon />
             </Fab>
