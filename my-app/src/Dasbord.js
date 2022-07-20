@@ -1,10 +1,11 @@
-import React ,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "urql";
-import { useHistory ,useParams } from 'react-router-dom';
+import { useHistory, useParams } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Graph from "./Graph";
-
-
+import Container from "react-bootstrap/Container";
 
 const allDataCrypto = `
 query ($name: String!){
@@ -79,76 +80,54 @@ query ($name: String!){
     }
   }
 
-`
-function Dashbord(props) {
-  const { id } = useParams()
-  
-    const [nameCypto, setNameCypto] = useState(String(id).toUpperCase());
- 
-    const [oldData, setOld] = useState();
-    const [result, reexecuteQuery] = useQuery({
-      query: allDataCrypto,
-      variables:{name:nameCypto}
-      });
-    const { data, fetching ,error} = result;
-    
+`;
+function Dashbord() {
+  const { id } = useParams();
 
-  const navigate = useHistory()
+  const nameCypto = String(id).toUpperCase();
 
-  
-    useEffect(() => {
-        if (fetching ) return;
-        if(error) navigate.push("/")
-        if(data) setOld(data.crypto);
- 
-    
-        
-        const timerId = setTimeout(() => {
+  const [oldData, setOld] = useState();
+  const [result, reexecuteQuery] = useQuery({
+    query: allDataCrypto,
+    variables: { name: nameCypto },
+  });
+  const { data, fetching, error } = result;
 
-            reexecuteQuery({requestPolicy: 'network-only'});
+  const navigate = useHistory();
 
-        }, 1000);
-        return () => clearTimeout(timerId);
-       
-    
-    }, [fetching,reexecuteQuery]);
-	console.log(oldData)
+  useEffect(() => {
+    if (fetching) return;
+    if (error) navigate.push("/");
+    if (data) setOld(data.crypto);
 
-	
+    const timerId = setTimeout(() => {
+      reexecuteQuery({ requestPolicy: "network-only" });
+    }, 1000);
+    return () => clearTimeout(timerId);
+  }, [fetching, reexecuteQuery]);
 
-
-    return (
-
-        <div >
-        <Card.Body>
-					
-					<h2 className="text-center mb-1   ">
-						{ oldData
-							? oldData.name + " " +oldData.time
-							: "Profile"}
-					</h2>
-				
-
-				
-				</Card.Body>
-    
-        <div className="h-75 d-inline-block w-100 text-center mt-2">
-				<div>
-					<pre>
-						{ oldData   ?  
-				
-								<Graph
-								style={{ transition: "scale 1s" }}
-								key={oldData}
-								data={oldData}
-							/>
-							: "Loding ..."
-							}
-					</pre>
-				</div>
-			</div>
-            </div>
-    );
+  return (
+    <Container  fluid="xxl">
+      <Row className="lg-12" >
+      <Card.Body className="text-center  ">
+        <h2 >
+          {oldData ? oldData.name + " " + oldData.time : "Profile"}
+        </h2>
+      </Card.Body>
+      </Row>
+      <Row className="">
+        {oldData ? (
+          <Graph
+            style={{ transition: "scale 1s" }}
+            key={oldData}
+            data={oldData}
+          />
+        ) : (
+          "Loding ..."
+        )}
+      </Row>
+    </Container>
+  );
 }
 
 export default Dashbord;
