@@ -11,11 +11,11 @@ import { utcHour } from "d3-time";
 import { ChartCanvas, Chart } from "react-stockcharts";
 import { CandlestickSeries, LineSeries } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-import { fitWidth } from "react-stockcharts/lib/helper";
-import { InteractiveYCoordinate } from "react-stockcharts/lib/interactive";
+
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { timeFormat } from "d3-time-format";
-
+//cleanup
+//
 import {
   CrossHairCursor,
   EdgeIndicator,
