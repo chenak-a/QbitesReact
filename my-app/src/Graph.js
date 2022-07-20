@@ -128,7 +128,7 @@ function Graph(props) {
     }
   };
 
-  const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 150])];
+  const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 200])];
 
 
   const aroonuChart = () => {
@@ -276,7 +276,7 @@ function Graph(props) {
               height={170}
               id={0}
               yExtents={(d) => [d.high, d.low]}
-              padding={{ top: 20, bottom: 10 }}
+              padding={{ top: 20, bottom: 10  }}
               origin={(w, h) => [0, h - 810]}
             >
               <YAxis axisAt="right" orient="right" ticks={7} {...yGrid} />

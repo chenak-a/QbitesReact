@@ -105,24 +105,7 @@ function Dashbord() {
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery]);
 
-       /* <div >
-      <Card.Body className="   text-center  ">
-        <h2 >
-          {oldData ? oldData.name + " " + oldData.time : "Profile"}
-        </h2>
-      </Card.Body>
-      </div>
-      <div className="raper" id="raper">
-      {oldData ? (
-          <Graph
-            style={{ transition: "scale 1s" }}
-            key={oldData}
-            data={oldData}
-          />
-        ) : (
-          "Loding ..."
-        )}
-      </div>*/
+  
   return (
     <div className="Dashbord" id="Dashbord" >
       <Card.Body className="   text-center  ">
