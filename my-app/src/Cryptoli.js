@@ -61,6 +61,9 @@ function Cryptoli(props) {
   useEffect(() => {
     if (fetching) return;
     if (data !== null) {
+      try {
+
+    
       let indexBUYSELLevel = data.crypto.data.length;
       let timesellget = "now";
       var BUYSELLevelget = "start the prayer ";
@@ -103,6 +106,9 @@ function Cryptoli(props) {
       );
 
       setItem(newvalue);
+    } finally{
+      return
+    }
     }
 
     // Set up to refetch in one second, if the query is idle

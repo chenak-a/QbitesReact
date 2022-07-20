@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-import PropTypes from "prop-types";
-import "./Graph.css";
 import { format } from "d3-format";
 import { OHLCTooltip, SingleValueTooltip } from "react-stockcharts/lib/tooltip";
-import { FormControl } from "react-bootstrap";
 import { scaleTime } from "d3-scale";
-import { utcDay } from "d3-time";
 import { utcHour } from "d3-time";
 import { ChartCanvas, Chart } from "react-stockcharts";
 import { CandlestickSeries, LineSeries } from "react-stockcharts/lib/series";
 import { XAxis, YAxis } from "react-stockcharts/lib/axes";
-
 import { last, timeIntervalBarWidth } from "react-stockcharts/lib/utils";
 import { timeFormat } from "d3-time-format";
 
+import "./Graph.css"
 import {
   CrossHairCursor,
   EdgeIndicator,
@@ -23,7 +18,6 @@ import {
   MouseCoordinateY,
 } from "react-stockcharts/lib/coordinates";
 import {
-  Label,
   Annotate,
   SvgPathAnnotation,
   buyPath,
@@ -94,14 +88,7 @@ function Graph(props) {
     setLoding(true);
     setPrice(initialdata.data[initialdata.data.length - 1].hcl.Close);
   }, [props.data]);
-  const macdAppearance = {
-    stroke: {
-      BUY2: "#FF0000",
-    },
-    fill: {
-      divergence: "#4682B4",
-    },
-  };
+
 
   const longAnnotationProps = {
     y: ({ yScale, datum }) => yScale(datum.low),
@@ -133,12 +120,7 @@ function Graph(props) {
       }
     : {};
 
-  window.addEventListener("resize", function () {
-    setWidth(window.innerWidth);
-    setHight(window.innerHeight);
-  });
 
-  // console.log(new Date(value.data.hcl.opentime[0]))
 
   const xAccessor = (d) => {
     if (d != null) {
@@ -147,9 +129,7 @@ function Graph(props) {
   };
 
   const xExtents = [xAccessor(last(data)), xAccessor(data[data.length - 150])];
-  const valuee = (e) => {
-    console.log(e.target.value);
-  };
+
 
   const aroonuChart = () => {
     return (
@@ -273,36 +253,18 @@ function Graph(props) {
       </>
     );
   };
-  const ambiChart = () => {
-    return (
-      <>
-        <LineSeries
-          yAccessor={(d) => d.ambi}
-          stroke={"#657a00"}
-          style={display2 ? { display: "none" } : { display: "" }}
-        />
-        <SingleValueTooltip
-          onClick={() => setDisplay2(!display2)}
-          yAccessor={(d) => d.ambi}
-          yLabel={`ambi`}
-          yDisplayFormat={format(".2f")}
-          valueFill="#657a00"
-          origin={[30, 3]}
-        />
-      </>
-    );
-  };
 
+  
   return (
     
-    <div className="raper">
-        {loading && data !== null ? (
+    <div className="graph" id="graph">
+       {loading && data !== null ? (
           <ChartCanvas
-            className="aa"
-            height={window.innerHeight}
-            margin={{ left: 80, right: 100, top: 5, bottom: 30 }}
-            width={width}
-            onChange={"resize"}
+          
+            height={window.innerHeight*0.90}
+            margin={{ left: 80, right: 100, top: 20, bottom: 30 }}
+            width={window.innerWidth}
+  
             type={"svg"}
             seriesName="MSFT"
             data={data}
@@ -311,10 +273,11 @@ function Graph(props) {
             xExtents={xExtents}
           >
             <Chart
-              height={150}
+              height={170}
               id={0}
               yExtents={(d) => [d.high, d.low]}
-              padding={{ top: 10, bottom: 10 }}
+              padding={{ top: 20, bottom: 10 }}
+              origin={(w, h) => [0, h - 810]}
             >
               <YAxis axisAt="right" orient="right" ticks={7} {...yGrid} />
               <Annotate
@@ -339,7 +302,7 @@ function Graph(props) {
               <CandlestickSeries
                 width={timeIntervalBarWidth(utcHour.every(1))}
               />
-              <OHLCTooltip origin={[-40, 8]} />
+              <OHLCTooltip origin={[-40, 20]} />
               {price > 1000 || price < 0.01 ? (
                 <EdgeIndicator
                   itemType="last"
@@ -378,7 +341,7 @@ function Graph(props) {
               id={1}
               yExtents={(d) => d.buy2}
               height={75}
-              origin={(w, h) => [0, h - 740]}
+              origin={(w, h) => [0, h - 630]}
               padding={{ top: 10, bottom: 10 }}
             >
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
@@ -431,7 +394,7 @@ function Graph(props) {
               id={2}
               yExtents={(d) => d.amb99}
               height={90}
-              origin={(w, h) => [0, h - 650]}
+              origin={(w, h) => [0, h - 545]}
               padding={{ top: 15, bottom: 15 }}
             >
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
@@ -530,7 +493,7 @@ function Graph(props) {
               id={3}
               yExtents={(d) => d.amb13}
               height={90}
-              origin={(w, h) => [0, h - 545]}
+              origin={(w, h) => [0, h - 445]}
               padding={{ top: 13, bottom: 10 }}
             >
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
@@ -611,8 +574,8 @@ function Graph(props) {
             <Chart
               id={4}
               yExtents={(d) => d.macd}
-              height={75}
-              origin={(w, h) => [0, h - 440]}
+              height={80}
+              origin={(w, h) => [0, h - 340]}
               padding={{ top: 10, bottom: 10 }}
             >
               <YAxis axisAt="right" orient="right" ticks={2} {...yGrid} />
@@ -668,8 +631,8 @@ function Graph(props) {
             <Chart
               id={5}
               yExtents={(d) => d.ambb5}
-              height={90}
-              origin={(w, h) => [0, h - 350]}
+              height={100}
+              origin={(w, h) => [0, h - 245]}
               padding={{ top: 10, bottom: 10 }}
             >
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
@@ -693,8 +656,8 @@ function Graph(props) {
             <Chart
               id={6}
               yExtents={(d) => d.aroonu / 100}
-              height={120}
-              origin={(w, h) => [0, h - 250]}
+              height={100}
+              origin={(w, h) => [0, h - 130]}
               p
             >
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
@@ -725,9 +688,11 @@ function Graph(props) {
         ) : (
           ""
         )}
-      </div>
+    </div>
    
   );
 }
-
+/*
+ 
+*/
 export default Graph;
