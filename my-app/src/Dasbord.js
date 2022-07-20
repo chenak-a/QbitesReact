@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "urql";
 import { useHistory, useParams } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Graph from "./Graph";
 import Container from "react-bootstrap/Container";
-
+import "./Dasbord.css"
 const allDataCrypto = `
 query ($name: String!){
     crypto(name: $name){
@@ -106,17 +105,16 @@ function Dashbord() {
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery]);
 
+  
   return (
-    <Container  fluid="xxl">
-      <Row className="lg-12" >
-      <Card.Body className="text-center  ">
+    <div className="Dashbord" id="Dashbord" >
+      <Card.Body className="   text-center  ">
         <h2 >
           {oldData ? oldData.name + " " + oldData.time : "Profile"}
         </h2>
       </Card.Body>
-      </Row>
-      <Row className="">
-        {oldData ? (
+       <div className="raper" id="raper">
+      {oldData ? (
           <Graph
             style={{ transition: "scale 1s" }}
             key={oldData}
@@ -125,8 +123,8 @@ function Dashbord() {
         ) : (
           "Loding ..."
         )}
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 }
 
