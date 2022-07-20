@@ -169,8 +169,6 @@ function Graph(props) {
           yLabel={`Aroonu`}
           valueFill="#283747"
           yDisplayFormat={format(".2f")}
-          /* valueStroke={atr14.stroke()} - optional prop */
-          /* labelStroke="#4682B4" - optional prop */
           origin={[-40, 3]}
         />
 
@@ -222,8 +220,6 @@ function Graph(props) {
           yLabel={`rsiK`}
           onClick={() => setDisplay16(!display16)}
           yDisplayFormat={format(".2f")}
-          /* valueStroke={atr14.stroke()} - optional prop */
-          /* labelStroke="#4682B4" - optional prop */
           origin={[75, 3]}
         />
         <CurrentCoordinate
@@ -248,8 +244,6 @@ function Graph(props) {
           yLabel={`ambb5`}
           valueFill="#283747"
           yDisplayFormat={format(".2f")}
-          /* valueStroke={atr14.stroke()} - optional prop */
-          /* labelStroke="#4682B4" - optional prop */
           origin={[-40, 3]}
         />
         <CurrentCoordinate
@@ -274,8 +268,6 @@ function Graph(props) {
           yLabel={`ci`}
           valueFill="#657a00"
           yDisplayFormat={format(".2f")}
-          /* valueStroke={atr14.stroke()} - optional prop */
-          /* labelStroke="#4682B4" - optional prop */
           origin={[30, 3]}
         />
         <CurrentCoordinate
@@ -574,8 +566,6 @@ function Graph(props) {
                 yLabel={`amb13`}
                 yDisplayFormat={format(".2f")}
                 valueFill="#283747"
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[-40, 3]}
               />
               <SingleValueTooltip
@@ -584,8 +574,6 @@ function Graph(props) {
                 yLabel={`amb14`}
                 valueFill="#657a00"
                 yDisplayFormat={format(".2f")}
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[30, 3]}
               />
               <SingleValueTooltip
@@ -594,8 +582,6 @@ function Graph(props) {
                 yLabel={`amb15`}
                 valueFill="#FF4136"
                 yDisplayFormat={format(".2f")}
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[100, 3]}
               />
               <SingleValueTooltip
@@ -604,8 +590,6 @@ function Graph(props) {
                 yLabel={`amb55`}
                 valueFill="#7FDBFF"
                 yDisplayFormat={format(".2f")}
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[170, 3]}
               />
               <CurrentCoordinate
@@ -654,8 +638,6 @@ function Graph(props) {
                 yLabel={`MACD`}
                 valueFill="#657a00"
                 yDisplayFormat={format(".2f")}
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[-40, 3]}
               />
               <SingleValueTooltip
@@ -664,8 +646,6 @@ function Graph(props) {
                 yLabel={`Signal`}
                 valueFill="#FF4136"
                 yDisplayFormat={format(".2f")}
-                /* valueStroke={atr14.stroke()} - optional prop */
-                /* labelStroke="#4682B4" - optional prop */
                 origin={[40, 3]}
               />
               <CurrentCoordinate
