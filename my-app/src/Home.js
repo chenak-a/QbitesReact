@@ -37,6 +37,7 @@ function Home() {
   const [userinfo, setUserinfo] = useState();
   const [hideprofile, setHideprofile] = useState(false);
   const [childdata, setChilddata] = useState();
+  const [hideprice ,setHideprice] = useState(true);
 
   const [listchilddata, setListchilddata] = useState(new Map());
 
@@ -119,7 +120,11 @@ function Home() {
         D += listchilddata.get(value.cryptoName).gainlose.D;
       }
     });
-
+    const hidepricefunc = () => {
+      var getstate = hideprice === true ? false : true;
+      setHideprice(getstate)
+      
+    }
     return (
       <div className="listall" id="listall">
         <div
@@ -131,10 +136,19 @@ function Home() {
           }}
         >
           {" "}
-          <img
-            src={require("./images/imageedit_1_5449003570.png").default}
+          {
+            !hideprice ? 
+            <img
+            onClick={hidepricefunc}
+            src={ require("./images/imageedit_1_5449003570.png").default}
             style={{ width: "40px" }}
-          />
+          />:<img
+          onClick={hidepricefunc}
+          src={ require("./images/imageedit_4_5917412648.png").default}
+          style={{ width: "40px" }}
+        />
+          }
+          
           <h2 style={{ color: "white" }}>{d.nameuser}</h2>
         </div>
         <div className="listprofile" id="listprofile">
@@ -158,7 +172,8 @@ function Home() {
                     }
                     description={
                       <p style={{ color: "white" }}>
-                        {Number(value.totale).toFixed(2)} $
+                        { !hideprice ? Number(value.totale).toFixed(2) :"00.00"} $
+                     
                       </p>
                     }
                   />
@@ -241,13 +256,14 @@ function Home() {
                       className="ant-list-item-meta-title"
                       style={{ color: "white" }}
                     >
-                      {total.toFixed(2)} $
+                      { !hideprice ? total.toFixed(2) :"00.00"} $
                     </h4>
                   </div>
                 }
               />
 
               <List.Item.Meta
+              style={{position :"relative"}}
                 title={
                   <div>
                     <h4
@@ -259,8 +275,8 @@ function Home() {
                   </div>
                 }
                 description={
-                  <div>
-                    <a style={M < 0 ? { color: "red" } : { color: "green" }}>
+                  <div >
+                    <a style={M < 0 ? { color: "red"  } : { color: "green" }}>
                       {M.toFixed(2).toString()}
                     </a>
                     <a style={{ color: "white" }}> / </a>
