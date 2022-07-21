@@ -31,6 +31,9 @@ function Home() {
   const [profile, setProfile] = useState("addresscontract");
   const [userinfo, setUserinfo] = useState();
   const [hideprofile, setHideprofile] = useState(false);
+  const [childdata, setChilddata] = useState();
+  const [listchilddata, setListchilddata] = useState(new Map());
+
   //login
   const user = "chenak";
 
@@ -42,18 +45,17 @@ function Home() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    const filtername =new RegExp("^" + user +"$", "gim")
- 
+    const filtername = new RegExp("^" + user + "$", "gim");
+
     if (
       String(e.target.value).match(/[!#$%^&+*(),.?":{}<>]|\[|\]|\\|\//gim) ===
       null
     ) {
-      //^chenak$
-      if(String(e.target.value).match(filtername) !== null){
-        let getname = ""
-        userinfo.balance.map((value) => getname += value.cryptoName +"|" )
-        setFilter(getname.slice(0,getname.length-1))
-      }else{
+      if (String(e.target.value).match(filtername) !== null) {
+        let getname = "";
+        userinfo.balance.map((value) => (getname += value.cryptoName + "|"));
+        setFilter(getname.slice(0, getname.length - 1));
+      } else {
         setFilter(e.target.value);
       }
 
@@ -61,17 +63,20 @@ function Home() {
     } else {
       setFilter(" ");
     }
- 
   };
   const filterdata = () => {
     const regex = new RegExp("^" + filter, "gi");
     setDatavisible(dataFragment.filter((value) => value.match(regex)));
   };
   useEffect(() => {
+    if (childdata) {
+      setListchilddata(listchilddata.set(childdata.name, childdata));
+    }
+  }, [childdata]);
+  useEffect(() => {
     if (fetching) return;
     if (data) {
       setUserinfo(data.User);
-
 
       setDataFragment(data.Allcrypto);
       filterdata();
@@ -92,24 +97,162 @@ function Home() {
     setHideprofile(getstate);
   };
   const getbalance = (d) => {
-    
     var balance = d.balance;
+    var total = 0;
+    var M = 0
+    var W = 0
+    var D = 0
+    balance.map((value) => {total += value.totale
+      if(listchilddata.has(value.cryptoName)){
+        M += listchilddata.get(value.cryptoName).gainlose.M
+        W += listchilddata.get(value.cryptoName).gainlose.W
+        D += listchilddata.get(value.cryptoName).gainlose.D
+      }
+    
+    
+    });
+    
+
     return (
       <div>
-        <h2 style={{color: "white"}}>{d.nameuser}</h2>
-        {balance
-          .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
-          .map((value) => 
-            (
-             
-              <p>
-                {value.cryptoName} : {Number(value.totale).toFixed(2)}{" "}
-              </p>
-            )
-          )}
+        <h2 style={{ color: "white", marginBottom: "5vh" }}>{d.nameuser}</h2>
+        <div></div>
+        <List style={{ color: "white" }}>
+          {balance
+            .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
+            .map((value) => (
+              <List.Item>
+                <List.Item.Meta
+                  class="text-sky-400"
+                  className="itemname"
+                  avatar={getimage(value.cryptoName,"white",25)}
+                  title={
+                    <h4
+                      class="ant-list-item-meta-title"
+                      style={{ color: "white" }}
+                    >
+                      {value.cryptoName}
+                    </h4>
+                  }
+                  description={
+                    <p style={{ color: "white" }}>
+                      {Number(value.totale).toFixed(2)} $
+                    </p>
+                  }
+                />
+                {listchilddata.has(value.cryptoName) ? (
+                  <List.Item.Meta
+                    title={
+                      <h4
+                        class="ant-list-item-meta-title"
+                        style={{ color: "white" }}
+                      >
+                        M/W/D
+                      </h4>
+                    }
+                    description={
+                      <a>
+                        <a
+                          style={
+                            listchilddata.get(value.cryptoName).gainlose.M < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          {listchilddata
+                            .get(value.cryptoName)
+                            .gainlose.M.toFixed(2)
+                            .toString() + "/"}
+                        </a>
+                        <a
+                          style={
+                            listchilddata.get(value.cryptoName).gainlose.W < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          {listchilddata
+                            .get(value.cryptoName)
+                            .gainlose.W.toFixed(2)
+                            .toString() + "/"}
+                        </a>
+                        <a
+                          style={
+                            listchilddata.get(value.cryptoName).gainlose.D < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          {listchilddata
+                            .get(value.cryptoName)
+                            .gainlose.D.toFixed(2)
+                            .toString()}
+                        </a>
+                      </a>
+                    }
+                  />
+                ) : (
+                  <p></p>
+                )}
+              </List.Item>
+            ))}
+            <List.Item>
+          <List.Item.Meta
+            title={<h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4>}
+            description={
+              <h4 class="ant-list-item-meta-title" style={{ color: "white" }}>
+                {total.toFixed(2)} $
+              </h4>
+            }
+          />
+         
+                  <List.Item.Meta
+                    title={
+                      <h4
+                        class="ant-list-item-meta-title"
+                        style={{ color: "white" }}
+                      >
+                        M/W/D
+                      </h4>
+                    }
+                    description={
+                      <a>
+                        <a
+                          style={
+                            M < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          { M.toFixed(2).toString()+ "/"}
+                        </a>
+                        <a
+                          style={
+                           W < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          {W.toFixed(2).toString()+ "/"}
+                        </a>
+                        <a
+                          style={
+                            D < 0
+                              ? { color: "red" }
+                              : { color: "green" }
+                          }
+                        >
+                          {D.toFixed(2).toString()}
+                        </a>
+                      </a>
+                    }
+                  />
+               </List.Item>
+        </List>
       </div>
     );
   };
+
   return (
     <div className="Home" id="Home">
       <div></div>
@@ -134,7 +277,11 @@ function Home() {
             <List>
               {datavisible ? (
                 datavisible.map((cyptoname) => (
-                  <Cryptoli key={cyptoname} name={cyptoname} />
+                  <Cryptoli
+                    passChildData={setChilddata}
+                    key={cyptoname}
+                    name={cyptoname}
+                  />
                 ))
               ) : (
                 <p>b</p>

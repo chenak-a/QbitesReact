@@ -103,7 +103,11 @@ function Cryptoli(props) {
       setPreviesPrice(
         data.crypto.data[result.data.crypto.data.length - 2].hcl.Close
       );
+     
 
+      props.passChildData(newvalue);
+        
+       
       setItem(newvalue);
    
     }
@@ -123,7 +127,7 @@ function Cryptoli(props) {
       <List.Item className="text-center" key={item.name}>
         <List.Item.Meta
           className="itemname"
-          avatar={getimage(item.name)}
+          avatar={getimage(item.name,"color",30)}
           title={item.name}
           description={item.time}
         />
@@ -238,37 +242,37 @@ function Cryptoli(props) {
 
 export default Cryptoli;
 
-var getimage = (name) => {
+export var getimage = (name,type,wth) => {
     try {
       if ("IOTAUSDT" === name) {
         return (
           <img
             src={
-              require(`../node_modules/cryptocurrency-icons/svg/color/miota.svg`)
+              require(`../node_modules/cryptocurrency-icons/svg/`+type+`/miota.svg`)
                 .default
             }
-            width={30}
+            width={wth}
           />
         );
       }
       return (
         <img
           src={
-            require(`../node_modules/cryptocurrency-icons/svg/color/${
+            require(`../node_modules/cryptocurrency-icons/svg/`+type+`/${
               name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
             }`).default
           }
-          width={30}
+          width={wth}
         />
       );
     } catch {
       return (
         <img
           src={
-            require(`../node_modules/cryptocurrency-icons/svg/black/gold.svg`)
+            require(`../node_modules/cryptocurrency-icons/svg/`+type+`/gold.svg`)
               .default
           }
-          width={30}
+          width={wth}
         />
       );
     }
