@@ -160,7 +160,7 @@ function Cryptoli(props) {
         <List.Item.Meta
           title={<a>M/W/D</a>}
           description={
-            <a>
+            <div>
               <a
                 style={
                   item.gainlose.M < 0 ? { color: "red" } : { color: "green" }
@@ -182,13 +182,13 @@ function Cryptoli(props) {
               >
                 {item.gainlose.D.toFixed(2).toString()}
               </a>
-            </a>
+            </div>
           }
         />
         <List.Item.Meta
           title={<a>Sell</a>}
           description={
-            <a>
+            <div>
               <a
                 style={
                   Number(String(item.BUYSELLevel).match(/[0-9]/gim)) <= 5
@@ -199,7 +199,7 @@ function Cryptoli(props) {
                 {item.BUYSELLevel + "/"}
               </a>
               <a>{item.timeSell}</a>
-            </a>
+            </div>
           }
         />
         <List.Item.Meta

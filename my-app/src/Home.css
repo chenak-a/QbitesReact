@@ -25,13 +25,13 @@
 
   padding: 8px 30px;
   margin-left: 8vw;
-
+  overflow: hidden;
   height: 70vh;
   width: 95%;
   background-color: #2b3143;
 
   box-shadow: 0 4px 8px 0 rgba(157,115,62, 0.2), 0 6px 20px 0 rgba(157,115,62, 0.8);
-  -webkit-animation: slide-in-right 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-right 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 .addresscontractexit  {
@@ -55,54 +55,70 @@
     -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
+    display: none;
+   
   }
   100% {
     -webkit-transform: translateX(1000px);
     transform: translateX(1000px);
     width: 0%;
     opacity: 0;
+    display: none;
     
   }
 }
 @keyframes slide-out-right {
   0% {
+    position: static;
     -webkit-transform: translateX(0);
     transform: translateX(0);
+    display: none;
     opacity: 1;
   }
   100% {
+    position: static;
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+    width: 0%;
+    display: none;
+    
+  }
+}
+@-webkit-keyframes slide-in-right {
+  0% {
+    position: static;
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    width: 0%;
+    display: none;
+    opacity: 0;
+    
+  }
+  100% {
+    position: static;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+    display: none;
+    
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    position: static;
     -webkit-transform: translateX(1000px);
     transform: translateX(1000px);
     opacity: 0;
     width: 0%;
     display: none;
   }
-}
-@-webkit-keyframes slide-in-right {
-  0% {
-    -webkit-transform: translateX(1000px);
-    transform: translateX(1000px);
-    opacity: 0;
-    
-  }
   100% {
+    position: static;
     -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
-    
-  }
-}
-@keyframes slide-in-right {
-  0% {
-    -webkit-transform: translateX(1000px);
-    transform: translateX(1000px);
-    opacity: 0;
-    width: 0%;
-  }
-  100% {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-    opacity: 1;
+    display: none;
   }
 }
 .profileclass {
