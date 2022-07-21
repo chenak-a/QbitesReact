@@ -8,7 +8,6 @@ import Cryptoli from "./Cryptoli";
 import { useQuery } from "urql";
 import { getimage } from "./Cryptoli";
 
-
 const QueryAllcryptouser = `
 query( $nameuser: String!){
     Allcrypto
@@ -38,13 +37,13 @@ function Home() {
   const [userinfo, setUserinfo] = useState();
   const [hideprofile, setHideprofile] = useState(false);
   const [childdata, setChilddata] = useState();
-  
+
   const [listchilddata, setListchilddata] = useState(new Map());
 
   //login
   const user = "chenak";
- 
-  const [result, reexecuteQuery] =  useQuery({
+
+  const [result, reexecuteQuery] = useQuery({
     query: QueryAllcryptouser,
     variables: { nameuser: user },
   });
@@ -80,6 +79,7 @@ function Home() {
       setListchilddata(listchilddata.set(childdata.name, childdata));
     }
   }, [childdata]);
+
   useEffect(() => {
     if (fetching) return;
     if (data) {
@@ -87,12 +87,8 @@ function Home() {
 
       setDataFragment(data.Allcrypto);
       filterdata();
-      if(!hideprofile){
-        setUserinfo(data.User);
-      }
-     
-      
-      
+
+      setUserinfo(data.User);
     }
 
     // Set up to refetch in one second, if the query is idle
@@ -112,41 +108,39 @@ function Home() {
   const getbalance = (d) => {
     var balance = d.balance;
     var total = 0;
-    var M = 0
-    var W = 0
-    var D = 0
-    balance.map((value) => {total += value.totale
-      if(listchilddata.has(value.cryptoName)){
-        M += listchilddata.get(value.cryptoName).gainlose.M
-        W += listchilddata.get(value.cryptoName).gainlose.W
-        D += listchilddata.get(value.cryptoName).gainlose.D
+    var M = 0;
+    var W = 0;
+    var D = 0;
+    balance.map((value) => {
+      total += value.totale;
+      if (listchilddata.has(value.cryptoName)) {
+        M += listchilddata.get(value.cryptoName).gainlose.M;
+        W += listchilddata.get(value.cryptoName).gainlose.W;
+        D += listchilddata.get(value.cryptoName).gainlose.D;
       }
-    
-    
     });
-    
 
     return (
-      <div>
-        <h2 style={{ color: "white", marginBottom: "5vh" }}>{d.nameuser}</h2>
-        <div></div>
-        <List style={{ color: "white" }}>
+      <div style={{ marginTop: "5vh" }}>
+     
+        <div style={{  marginBottom: "5vh",marginLeft:"3vw" ,display:"grid", gridTemplateColumns:"20% auto"}}>   <img src= {require("./images/imageedit_1_5449003570.png").default} style={{ width:"40px"  }} /><h2 style={{ color: "white" }}>{d.nameuser}</h2></div>
+
+        <List style={{ color: "white" ,overflow:"auto" }}>
           {balance
             .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
             .map((value) => (
-              <List.Item  key={value.cryptoName}>
+              <List.Item key={value.cryptoName}>
                 <List.Item.Meta
                   className="text-sky-400"
-             
-                  avatar={getimage(value.cryptoName,"white",25)}
+                  avatar={getimage(value.cryptoName, "white", 25)}
                   title={
                     <div>
-                    <h4
-                    className="ant-list-item-meta-title"
-                      style={{ color: "white" }}
-                    >
-                      {value.cryptoName}
-                    </h4>
+                      <h4
+                        className="ant-list-item-meta-title"
+                        style={{ color: "white" }}
+                      >
+                        {value.cryptoName}
+                      </h4>
                     </div>
                   }
                   description={
@@ -159,12 +153,12 @@ function Home() {
                   <List.Item.Meta
                     title={
                       <div>
-                      <h4
-                      className="ant-list-item-meta-title"
-                        style={{ color: "white" }}
-                      >
-                        M/W/D
-                      </h4>
+                        <h4
+                          className="ant-list-item-meta-title"
+                          style={{ color: "white" }}
+                        >
+                          M/W/D
+                        </h4>
                       </div>
                     }
                     description={
@@ -179,9 +173,9 @@ function Home() {
                           {listchilddata
                             .get(value.cryptoName)
                             .gainlose.M.toFixed(2)
-                            .toString() }
+                            .toString()}
                         </a>
-                        <a  style={{ color: "white" }}> / </a>
+                        <a style={{ color: "white" }}> / </a>
                         <a
                           style={
                             listchilddata.get(value.cryptoName).gainlose.W < 0
@@ -192,9 +186,9 @@ function Home() {
                           {listchilddata
                             .get(value.cryptoName)
                             .gainlose.W.toFixed(2)
-                            .toString() }
+                            .toString()}
                         </a>
-                        <a  style={{ color: "white" }}> / </a>
+                        <a style={{ color: "white" }}> / </a>
                         <a
                           style={
                             listchilddata.get(value.cryptoName).gainlose.D < 0
@@ -215,64 +209,53 @@ function Home() {
                 )}
               </List.Item>
             ))}
-            <List.Item>
-          <List.Item.Meta
-            title={<div><h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4></div>}
-            description={
-              <div>
-              <h4 className="ant-list-item-meta-title" style={{ color: "white" }}>
-                {total.toFixed(2)} $
-              </h4>
-              </div>
-            }
-          />
-         
-                  <List.Item.Meta
-                    title={
-                      <div>
-                      <h4
-                      className="ant-list-item-meta-title"
-                        style={{ color: "white" }}
-                      >
-                        M/W/D
-                      </h4>
-                      </div>
-                    }
-                    description={
-                      <div>
-                        <a
-                          style={
-                            M < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          { M.toFixed(2).toString()}
-                        </a>
-                        <a  style={{ color: "white" }}> / </a>
-                        <a
-                          style={
-                           W < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          {W.toFixed(2).toString()}
-                        </a>
-                        <a  style={{ color: "white" }}> / </a>
-                        <a
-                          style={
-                            D < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          {D.toFixed(2).toString()}
-                        </a>
-                      </div>
-                    }
-                  />
-               </List.Item>
+          <List.Item >
+            <List.Item.Meta
+              title={
+                <div>
+                  <h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4>
+                </div>
+              }
+              description={
+                <div>
+                  <h4
+                    className="ant-list-item-meta-title"
+                    style={{ color: "white" }}
+                  >
+                    {total.toFixed(2)} $
+                  </h4>
+                </div>
+              }
+            />
+
+            <List.Item.Meta
+              title={
+                <div>
+                  <h4
+                    className="ant-list-item-meta-title"
+                    style={{ color: "white" }}
+                  >
+                    M/W/D
+                  </h4>
+                </div>
+              }
+              description={
+                <div>
+                  <a style={M < 0 ? { color: "red" } : { color: "green" }}>
+                    {M.toFixed(2).toString()}
+                  </a>
+                  <a style={{ color: "white" }}> / </a>
+                  <a style={W < 0 ? { color: "red" } : { color: "green" }}>
+                    {W.toFixed(2).toString()}
+                  </a>
+                  <a style={{ color: "white" }}> / </a>
+                  <a style={D < 0 ? { color: "red" } : { color: "green" }}>
+                    {D.toFixed(2).toString()}
+                  </a>
+                </div>
+              }
+            />
+          </List.Item>
         </List>
       </div>
     );
