@@ -126,7 +126,7 @@ function Cryptoli(props) {
     <div className="h-75 d-inline-block w-100 text-center mt-2" id="Dashbord">
       <List.Item className="text-center" key={item.name}>
         <List.Item.Meta
-          className="itemname"
+          
           avatar={getimage(item.name,"color",30)}
           title={item.name}
           description={item.time}
