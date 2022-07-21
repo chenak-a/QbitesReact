@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { List } from "antd";
 import { Button } from "@material-ui/core";
 import { useQuery } from "urql";
-import { Link } from "react-router-dom";
+
 import "./Cryptoli.css";
 
 const cyptoData = `
@@ -116,41 +116,8 @@ function Cryptoli(props) {
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery, props.name]);
 
-  var getimage = (name) => {
-    try {
-      if ("IOTAUSDT" === name) {
-        return (
-          <img
-            src={
-              require(`../node_modules/cryptocurrency-icons/svg/color/miota.svg`)
-                .default
-            }
-            width={30}
-          />
-        );
-      }
-      return (
-        <img
-          src={
-            require(`../node_modules/cryptocurrency-icons/svg/color/${
-              name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
-            }`).default
-          }
-          width={30}
-        />
-      );
-    } catch {
-      return (
-        <img
-          src={
-            require(`../node_modules/cryptocurrency-icons/svg/black/gold.svg`)
-              .default
-          }
-          width={30}
-        />
-      );
-    }
-  };
+  
+
   return item ? (
     <div className="h-75 d-inline-block w-100 text-center mt-2" id="Dashbord">
       <List.Item className="text-center" key={item.name}>
@@ -270,3 +237,39 @@ function Cryptoli(props) {
 }
 
 export default Cryptoli;
+
+var getimage = (name) => {
+    try {
+      if ("IOTAUSDT" === name) {
+        return (
+          <img
+            src={
+              require(`../node_modules/cryptocurrency-icons/svg/color/miota.svg`)
+                .default
+            }
+            width={30}
+          />
+        );
+      }
+      return (
+        <img
+          src={
+            require(`../node_modules/cryptocurrency-icons/svg/color/${
+              name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
+            }`).default
+          }
+          width={30}
+        />
+      );
+    } catch {
+      return (
+        <img
+          src={
+            require(`../node_modules/cryptocurrency-icons/svg/black/gold.svg`)
+              .default
+          }
+          width={30}
+        />
+      );
+    }
+  };
