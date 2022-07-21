@@ -121,142 +121,162 @@ function Home() {
     });
 
     return (
-      <div style={{ marginTop: "5vh" }}>
-     
-        <div style={{  marginBottom: "5vh",marginLeft:"3vw" ,display:"grid", gridTemplateColumns:"20% auto"}}>   <img src= {require("./images/imageedit_1_5449003570.png").default} style={{ width:"40px"  }} /><h2 style={{ color: "white" }}>{d.nameuser}</h2></div>
-
-        <List style={{ color: "white" ,overflow:"auto" }}>
-          {balance
-            .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
-            .map((value) => (
-              <List.Item key={value.cryptoName}>
-                <List.Item.Meta
-                  className="text-sky-400"
-                  avatar={getimage(value.cryptoName, "white", 25)}
-                  title={
-                    <div>
-                      <h4
-                        className="ant-list-item-meta-title"
-                        style={{ color: "white" }}
-                      >
-                        {value.cryptoName}
-                      </h4>
-                    </div>
-                  }
-                  description={
-                    <p style={{ color: "white" }}>
-                      {Number(value.totale).toFixed(2)} $
-                    </p>
-                  }
-                />
-                {listchilddata.has(value.cryptoName) ? (
+      <div className="listall" id="listall">
+        <div
+          style={{
+            marginBottom: "5vh",
+            marginLeft: "3vw",
+            display: "grid",
+            gridTemplateColumns: "20% auto",
+          }}
+        >
+          {" "}
+          <img
+            src={require("./images/imageedit_1_5449003570.png").default}
+            style={{ width: "40px" }}
+          />
+          <h2 style={{ color: "white" }}>{d.nameuser}</h2>
+        </div>
+        <div className="listprofile" id="listprofile">
+          <List>
+            {balance
+              .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
+              .map((value) => (
+                <List.Item key={value.cryptoName}>
                   <List.Item.Meta
+                    className="text-sky-400"
+                    avatar={getimage(value.cryptoName, "white", 25)}
                     title={
                       <div>
                         <h4
                           className="ant-list-item-meta-title"
                           style={{ color: "white" }}
                         >
-                          M/W/D
+                          {value.cryptoName}
                         </h4>
                       </div>
                     }
                     description={
-                      <div>
-                        <a
-                          style={
-                            listchilddata.get(value.cryptoName).gainlose.M < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          {listchilddata
-                            .get(value.cryptoName)
-                            .gainlose.M.toFixed(2)
-                            .toString()}
-                        </a>
-                        <a style={{ color: "white" }}> / </a>
-                        <a
-                          style={
-                            listchilddata.get(value.cryptoName).gainlose.W < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          {listchilddata
-                            .get(value.cryptoName)
-                            .gainlose.W.toFixed(2)
-                            .toString()}
-                        </a>
-                        <a style={{ color: "white" }}> / </a>
-                        <a
-                          style={
-                            listchilddata.get(value.cryptoName).gainlose.D < 0
-                              ? { color: "red" }
-                              : { color: "green" }
-                          }
-                        >
-                          {listchilddata
-                            .get(value.cryptoName)
-                            .gainlose.D.toFixed(2)
-                            .toString()}
-                        </a>
-                      </div>
+                      <p style={{ color: "white" }}>
+                        {Number(value.totale).toFixed(2)} $
+                      </p>
                     }
                   />
-                ) : (
-                  <p></p>
-                )}
-              </List.Item>
-            ))}
-          <List.Item >
-            <List.Item.Meta
-              title={
-                <div>
-                  <h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4>
-                </div>
-              }
-              description={
-                <div>
-                  <h4
-                    className="ant-list-item-meta-title"
-                    style={{ color: "white" }}
-                  >
-                    {total.toFixed(2)} $
-                  </h4>
-                </div>
-              }
-            />
+                  {listchilddata.has(value.cryptoName) ? (
+                    <List.Item.Meta
+                      title={
+                        <div>
+                          <h4
+                            className="ant-list-item-meta-title"
+                            style={{ color: "white" }}
+                          >
+                            M/W/D
+                          </h4>
+                        </div>
+                      }
+                      description={
+                        <div>
+                          <a
+                            style={
+                              listchilddata.get(value.cryptoName).gainlose.M < 0
+                                ? { color: "red" }
+                                : { color: "green" }
+                            }
+                          >
+                            {listchilddata
+                              .get(value.cryptoName)
+                              .gainlose.M.toFixed(2)
+                              .toString()}
+                          </a>
+                          <a style={{ color: "white" }}> / </a>
+                          <a
+                            style={
+                              listchilddata.get(value.cryptoName).gainlose.W < 0
+                                ? { color: "red" }
+                                : { color: "green" }
+                            }
+                          >
+                            {listchilddata
+                              .get(value.cryptoName)
+                              .gainlose.W.toFixed(2)
+                              .toString()}
+                          </a>
+                          <a style={{ color: "white" }}> / </a>
+                          <a
+                            style={
+                              listchilddata.get(value.cryptoName).gainlose.D < 0
+                                ? { color: "red" }
+                                : { color: "green" }
+                            }
+                          >
+                            {listchilddata
+                              .get(value.cryptoName)
+                              .gainlose.D.toFixed(2)
+                              .toString()}
+                          </a>
+                        </div>
+                      }
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </List.Item>
+              ))}
+          </List>
+         
+        </div>
+        <div className="total" id="total">
+        <List>
+            <List.Item key={"total"}>
+              <List.Item.Meta
+                 className="text-sky-400"
+                title={
+                  <div>
+                    <h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4>
+                  </div>
+                }
+                description={
+                  <div>
+                    <h4
+                      className="ant-list-item-meta-title"
+                      style={{ color: "white" }}
+                    >
+                      {total.toFixed(2)} $
+                    </h4>
+                  </div>
+                }
+              />
 
-            <List.Item.Meta
-              title={
-                <div>
-                  <h4
-                    className="ant-list-item-meta-title"
-                    style={{ color: "white" }}
-                  >
-                    M/W/D
-                  </h4>
-                </div>
-              }
-              description={
-                <div>
-                  <a style={M < 0 ? { color: "red" } : { color: "green" }}>
-                    {M.toFixed(2).toString()}
-                  </a>
-                  <a style={{ color: "white" }}> / </a>
-                  <a style={W < 0 ? { color: "red" } : { color: "green" }}>
-                    {W.toFixed(2).toString()}
-                  </a>
-                  <a style={{ color: "white" }}> / </a>
-                  <a style={D < 0 ? { color: "red" } : { color: "green" }}>
-                    {D.toFixed(2).toString()}
-                  </a>
-                </div>
-              }
-            />
-          </List.Item>
-        </List>
+              <List.Item.Meta
+                title={
+                  <div>
+                    <h4
+                      className="ant-list-item-meta-title"
+                      style={{ color: "white" }}
+                    >
+                      M/W/D
+                    </h4>
+                  </div>
+                }
+                description={
+                  <div>
+                    <a style={M < 0 ? { color: "red" } : { color: "green" }}>
+                      {M.toFixed(2).toString()}
+                    </a>
+                    <a style={{ color: "white" }}> / </a>
+                    <a style={W < 0 ? { color: "red" } : { color: "green" }}>
+                      {W.toFixed(2).toString()}
+                    </a>
+                    <a style={{ color: "white" }}> / </a>
+                    <a style={D < 0 ? { color: "red" } : { color: "green" }}>
+                      {D.toFixed(2).toString()}
+                    </a>
+                  </div>
+                }
+              />
+            </List.Item>
+          </List>
+          </div>
       </div>
     );
   };
