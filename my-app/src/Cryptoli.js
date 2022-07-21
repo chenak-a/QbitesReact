@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { List } from "antd";
 import { Button } from "@material-ui/core";
 import { useQuery } from "urql";
-import { Link } from "react-router-dom";
+
 import "./Cryptoli.css";
 
 const cyptoData = `
@@ -103,7 +103,11 @@ function Cryptoli(props) {
       setPreviesPrice(
         data.crypto.data[result.data.crypto.data.length - 2].hcl.Close
       );
+     
 
+      props.passChildData(newvalue);
+        
+       
       setItem(newvalue);
    
     }
@@ -116,47 +120,14 @@ function Cryptoli(props) {
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery, props.name]);
 
-  var getimage = (name) => {
-    try {
-      if ("IOTAUSDT" === name) {
-        return (
-          <img
-            src={
-              require(`../node_modules/cryptocurrency-icons/svg/color/miota.svg`)
-                .default
-            }
-            width={30}
-          />
-        );
-      }
-      return (
-        <img
-          src={
-            require(`../node_modules/cryptocurrency-icons/svg/color/${
-              name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
-            }`).default
-          }
-          width={30}
-        />
-      );
-    } catch {
-      return (
-        <img
-          src={
-            require(`../node_modules/cryptocurrency-icons/svg/black/gold.svg`)
-              .default
-          }
-          width={30}
-        />
-      );
-    }
-  };
+  
+
   return item ? (
     <div className="h-75 d-inline-block w-100 text-center mt-2" id="Dashbord">
       <List.Item className="text-center" key={item.name}>
         <List.Item.Meta
           className="itemname"
-          avatar={getimage(item.name)}
+          avatar={getimage(item.name,"color",30)}
           title={item.name}
           description={item.time}
         />
@@ -189,7 +160,7 @@ function Cryptoli(props) {
         <List.Item.Meta
           title={<a>M/W/D</a>}
           description={
-            <a>
+            <div>
               <a
                 style={
                   item.gainlose.M < 0 ? { color: "red" } : { color: "green" }
@@ -211,13 +182,13 @@ function Cryptoli(props) {
               >
                 {item.gainlose.D.toFixed(2).toString()}
               </a>
-            </a>
+            </div>
           }
         />
         <List.Item.Meta
           title={<a>Sell</a>}
           description={
-            <a>
+            <div>
               <a
                 style={
                   Number(String(item.BUYSELLevel).match(/[0-9]/gim)) <= 5
@@ -228,7 +199,7 @@ function Cryptoli(props) {
                 {item.BUYSELLevel + "/"}
               </a>
               <a>{item.timeSell}</a>
-            </a>
+            </div>
           }
         />
         <List.Item.Meta
@@ -270,3 +241,39 @@ function Cryptoli(props) {
 }
 
 export default Cryptoli;
+
+export var getimage = (name,type,wth) => {
+    try {
+      if ("IOTAUSDT" === name) {
+        return (
+          <img
+            src={
+              require(`../node_modules/cryptocurrency-icons/svg/`+type+`/miota.svg`)
+                .default
+            }
+            width={wth}
+          />
+        );
+      }
+      return (
+        <img
+          src={
+            require(`../node_modules/cryptocurrency-icons/svg/`+type+`/${
+              name.toLowerCase().match("[a-z]*(?=usdt)") + ".svg"
+            }`).default
+          }
+          width={wth}
+        />
+      );
+    } catch {
+      return (
+        <img
+          src={
+            require(`../node_modules/cryptocurrency-icons/svg/`+type+`/gold.svg`)
+              .default
+          }
+          width={wth}
+        />
+      );
+    }
+  };
