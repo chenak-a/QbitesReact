@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { List } from "antd";
 import { Button } from "@material-ui/core";
 import { useQuery } from "urql";
-
+import { Link } from "react-router-dom";
 import "./Cryptoli.css";
 
 const cyptoData = `
@@ -206,7 +206,7 @@ function Cryptoli(props) {
           title={
             item.projection <= 0 ? (
               <Button
-                href={`/${item.name}`}
+            
                 size="small"
                 style={{
                   backgroundColor: "red",
@@ -215,9 +215,12 @@ function Cryptoli(props) {
                 }}
                 variant="contained"
               >
+                <Link  style={{color: "white",background: "transparent"}} to={item.name}>
                 Trade
+                </Link>
               </Button>
             ) : (
+
               <Button
                 href={`/${item.name}`}
                 size="small"
@@ -228,7 +231,9 @@ function Cryptoli(props) {
                 }}
                 variant="contained"
               >
+                 <Link style={{color: "white"}} to={item.name}>
                 Trade
+                </Link>
               </Button>
             )
           }
