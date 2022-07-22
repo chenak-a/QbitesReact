@@ -7,6 +7,8 @@ import AddIcon from "@material-ui/icons/Add";
 import Cryptoli from "./Cryptoli";
 import { useQuery } from "urql";
 import { getimage } from "./Cryptoli";
+import { useSelector, useDispatch } from 'react-redux'
+
 
 const QueryAllcryptouser = `
 query( $nameuser: String!){
@@ -33,14 +35,16 @@ function Home() {
   const [dataFragment, setDataFragment] = useState([]);
   const [datavisible, setDatavisible] = useState([]);
   const [filter, setFilter] = useState("");
-  const [profile, setProfile] = useState("addresscontract");
   const [userinfo, setUserinfo] = useState();
-  const [hideprofile, setHideprofile] = useState(false);
+  
   const [childdata, setChilddata] = useState();
-  const [hideprice ,setHideprice] = useState(true);
+
 
   const [listchilddata, setListchilddata] = useState(new Map());
-
+  const hideprofile = useSelector(state => state.profile.hide)
+  const hideprice = useSelector(state => state.pricevs.hide)
+  const dispatch = useDispatch()
+  
   //login
   const user = "chenak";
 
@@ -100,11 +104,10 @@ function Home() {
     return () => clearTimeout(timerId);
   }, [fetching, reexecuteQuery]);
   const profilevisibility = () => {
-    var pr =
-      profile === "addresscontract" ? "addresscontractexit" : "addresscontract";
-    var getstate = hideprofile === true ? false : true;
-    setProfile(pr);
-    setHideprofile(getstate);
+  
+
+    dispatch({ type: 'hideprofile' })
+    
   };
   const getbalance = (d) => {
     var balance = d.balance;
@@ -121,9 +124,9 @@ function Home() {
       }
     });
     const hidepricefunc = () => {
-      var getstate = hideprice === true ? false : true;
-      setHideprice(getstate)
-      
+    
+     
+      dispatch({ type: 'pricevs' })
     }
     return (
       <div className="listall" id="listall">
@@ -154,7 +157,7 @@ function Home() {
         <div className="listprofile" id="listprofile">
           <List>
             {balance
-              .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
+              .sort((a, b) => b.totale-a.totale)
               .map((value) => (
                 <List.Item key={value.cryptoName}>
                   <List.Item.Meta
@@ -302,7 +305,7 @@ function Home() {
       <div></div>
       <div className="page" id="page">
         <div className="profilemaincontainer" id="profilemaincontainer">
-          <div className={profile} id={profile}>
+          <div className={!hideprofile ? "addresscontract": "addresscontractexit"} id={!hideprofile ? "addresscontract": "addresscontractexit"}>
             <div className="profileclass" id="profileclass">
               {userinfo && !hideprofile ? getbalance(userinfo) : <p></p>}
             </div>

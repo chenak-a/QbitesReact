@@ -12,7 +12,9 @@ import Dasbord from "./Dasbord";
 
 import Pagenotfound from "./Pagenotfound";
 import { Provider } from "urql";
+
 import { client } from "../src/urqlClient";
+
 function App() {
 
 	return (
@@ -21,12 +23,14 @@ function App() {
 			
 					<Router>
 					<Provider value={client}>
+                      
 						<Switch>
 							<Route path="/" exact component={Home} />
 							<Route path="/:id" exact component={Dasbord}/>
 							
 							<Route path="*" component={Pagenotfound} />
 						</Switch>
+                       
 						</Provider>
 					</Router>
 				
