@@ -157,7 +157,7 @@ function Home() {
         <div className="listprofile" id="listprofile">
           <List>
             {balance
-              .sort((a, b) => a.cryptoName.localeCompare(b.cryptoName))
+              .sort((a, b) => b.totale-a.totale)
               .map((value) => (
                 <List.Item key={value.cryptoName}>
                   <List.Item.Meta
