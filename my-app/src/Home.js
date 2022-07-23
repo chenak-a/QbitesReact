@@ -39,7 +39,7 @@ function Home() {
   
   const [childdata, setChilddata] = useState();
 
-
+  const [profilehidetype ,setProfilehidetype]= useState("");
   const [listchilddata, setListchilddata] = useState(new Map());
   const hideprofile = useSelector(state => state.profile.hide)
   const hideprice = useSelector(state => state.pricevs.hide)
@@ -105,7 +105,7 @@ function Home() {
   }, [fetching, reexecuteQuery]);
   const profilevisibility = () => {
   
-
+    setProfilehidetype("addresscontractexit")
     dispatch({ type: 'hideprofile' })
     
   };
@@ -305,7 +305,7 @@ function Home() {
       <div></div>
       <div className="page" id="page">
         <div className="profilemaincontainer" id="profilemaincontainer">
-          <div className={!hideprofile ? "addresscontract": "addresscontractexit"} id={!hideprofile ? "addresscontract": "addresscontractexit"}>
+          <div className={!hideprofile ? "addresscontract": profilehidetype} id={!hideprofile ? "addresscontract": profilehidetype}>
             <div className="profileclass" id="profileclass">
               {userinfo && !hideprofile ? getbalance(userinfo) : <p></p>}
             </div>

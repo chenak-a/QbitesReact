@@ -66,9 +66,10 @@ function Cryptoli(props) {
       let indexBUYSELLevel = data.crypto.data.length;
       let timesellget = "now";
       var BUYSELLevelget = "start the prayer ";
+      let BYTSELL = data.crypto.data
       for (
         let i = data.crypto.data.length - 1;
-        data.crypto.data[i].ai.other.BUYSELL !== 2.0 || i === 0;
+        BYTSELL[i].ai.other.BUYSELL !== 2.0 || i === 0;
         --i
       ) {
         indexBUYSELLevel = i;
