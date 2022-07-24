@@ -2,7 +2,10 @@
 # QbitesReact
 
 [![npm](https://img.shields.io/badge/--CB3837?logo=npm&logoColor=FFFFFF.)](https://www.npmjs.com/)
+[![react](https://img.shields.io/badge/--000000?logo=React&logoColor=FFFFFF.)](https://reactjs.org/)
 [![apollo graphql](https://img.shields.io/badge/--311C87?logo=Apollo%20GraphQL&logoColor=FFFFFF.)](https://www.apollographql.com/)
+[![redux](https://img.shields.io/badge/--764ABC?logo=Redux&logoColor=FFFFFF.)](https://redux.js.org/)
+
 
 
 UI for Ai indicator algorithem 
