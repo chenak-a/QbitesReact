@@ -59,8 +59,8 @@ function Cryptoli(props) {
     )}`;
   }
   useEffect(() => {
-    if (fetching || error) return;
-    if (data ) {
+    if (fetching ) return;
+    if (data !== null ) {
    
     
       let indexBUYSELLevel = data.crypto.data.length;
