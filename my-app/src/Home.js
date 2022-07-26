@@ -117,7 +117,6 @@ function Home() {
     setDatavisible(sortmaintable(dataFragment,sorttable).filter((value) => value.match(regex)));
   };
   const filterprofile = (d)=>{
-    console.log(d)
     if(sortprofile === "M" && datastate.length !==0){
       try {
         return d.sort((a,b)=> datastate.get(b.cryptoName).gainlose.M - datastate.get(a.cryptoName).gainlose.M  )
