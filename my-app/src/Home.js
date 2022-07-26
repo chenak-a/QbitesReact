@@ -37,7 +37,7 @@ function Home() {
   const [filter, setFilter] = useState("");
   const [userinfo, setUserinfo] = useState();
   const [sorttable ,setSorttable] = useState("");
-  
+  const [sortprofile ,setSortprofile] = useState("");
 
   const [profilehidetype ,setProfilehidetype]= useState("");
   const hideprofile = useSelector(state => state.profile.hide)
@@ -78,22 +78,76 @@ function Home() {
   };
   const sortmaintable = (d) =>{
       if(sorttable === "price" && datastate.length !==0){
-        return d.sort((a,b) => datastate.get(b).price-datastate.get(a).price)
+        try {
+          return d.sort((a,b) => datastate.get(b).price-datastate.get(a).price)
+        }
+        catch{
+
+        }
       }else if(sorttable === "projection" && datastate.length !==0){
-        return d.sort((a,b) => datastate.get(b).projection-datastate.get(a).projection)
+        try {
+          return d.sort((a,b) => datastate.get(b).projection-datastate.get(a).projection)
+        }catch{
+
+        }
       }else if(sorttable === "D" && datastate.length !==0){
+        try {
         return d.sort((a,b) => datastate.get(b).gainlose.D-datastate.get(a).gainlose.D)
+        }catch{
+
+        }
       }else if(sorttable === "W" && datastate.length !==0){
+        try {
         return d.sort((a,b) => datastate.get(b).gainlose.W-datastate.get(a).gainlose.W)
+        }catch{
+
+        }
       }else if(sorttable === "M" && datastate.length !==0){
-        return d.sort((a,b) => datastate.get(b).gainlose.M-datastate.get(a).gainlose.M)
+        try{
+
+          return d.sort((a,b) => datastate.get(b).gainlose.M-datastate.get(a).gainlose.M)
+        }catch{
+
+        }
       }
       return d
   }
   const filterdata = () => {
     const regex = new RegExp("^" + filter, "gi");
-    setDatavisible(sortmaintable(dataFragment).filter((value) => value.match(regex)));
+    setDatavisible(sortmaintable(dataFragment,sorttable).filter((value) => value.match(regex)));
   };
+  const filterprofile = (d)=>{
+    console.log(d)
+    if(sortprofile === "M" && datastate.length !==0){
+      try {
+        return d.sort((a,b)=> datastate.get(b.cryptoName).gainlose.M - datastate.get(a.cryptoName).gainlose.M  )
+        
+        
+      }
+      catch{
+
+      }
+    }else  if(sortprofile === "W" && datastate.length !==0){
+      try {
+        return d.sort((a,b)=> datastate.get(b.cryptoName).gainlose.W - datastate.get(a.cryptoName).gainlose.W  )
+        
+        
+      }
+      catch{
+
+      }
+    }else  if(sortprofile === "D" && datastate.length !==0){
+      try {
+        return d.sort((a,b)=> datastate.get(b.cryptoName).gainlose.D - datastate.get(a.cryptoName).gainlose.D  )
+        
+        
+      }
+      catch{
+
+      }
+    }
+    return d
+  }
  
 
   useEffect(() => {
@@ -167,8 +221,8 @@ function Home() {
         </div>
         <div className="listprofile" id="listprofile">
           <List>
-            {balance
-              .sort((a, b) => b.totale-a.totale)
+            {filterprofile(balance
+              .sort((a, b) => b.totale-a.totale))
               .map((value) => (
                 <List.Item key={value.cryptoName}>
                   <List.Item.Meta
@@ -187,10 +241,10 @@ function Home() {
                       </div>
                     }
                     description={
-                      <p style={{ color: "white" }}>
+                      <a  onClick={() =>setSortprofile("")}  style={{ color: "white" }}>
                         { !hideprice ? Number(value.totale).toFixed(2) :"00.00"} $
                      
-                      </p>
+                      </a>
                     }
                   />
                   {datastate.has(value.cryptoName) ? (
@@ -207,7 +261,7 @@ function Home() {
                       }
                       description={
                         <div>
-                          <a
+                          <a onClick={() =>setSortprofile("M")}
                             style={
                               datastate.get(value.cryptoName).gainlose.M < 0
                                 ? { color: "red" }
@@ -220,7 +274,7 @@ function Home() {
                               .toString()}
                           </a>
                           <a style={{ color: "white" }}> / </a>
-                          <a
+                          <a onClick={() =>setSortprofile("W")}
                             style={
                               datastate.get(value.cryptoName).gainlose.W < 0
                                 ? { color: "red" }
@@ -230,10 +284,11 @@ function Home() {
                             {datastate
                               .get(value.cryptoName)
                               .gainlose.W.toFixed(2)
-                              .toString()}
+                              .toString()
+                              }
                           </a>
                           <a style={{ color: "white" }}> / </a>
-                          <a
+                          <a onClick={() =>setSortprofile("D")}
                             style={
                               datastate.get(value.cryptoName).gainlose.D < 0
                                 ? { color: "red" }
