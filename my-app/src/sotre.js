@@ -17,9 +17,18 @@ const pricevs = (state = { hide : true}, action) => {
         return state;
     }
   };
+  const datastate = (state = { data : new Map()}, action) => {
+    switch (action.type) {
+      case "datastate":
+        return {data : action.payload };
+      default:
+        return state;
+    }
+  };
 const combien = combineReducers({
     profile,
     pricevs,
+    datastate,
   });
 const store = createStore(
     combien,

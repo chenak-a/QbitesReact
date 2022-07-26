@@ -9,7 +9,7 @@ import { useQuery } from "urql";
 import { getimage } from "./Cryptoli";
 import { useSelector, useDispatch } from 'react-redux'
 
-
+import { Link } from "react-router-dom";
 const QueryAllcryptouser = `
 query( $nameuser: String!){
     Allcrypto
@@ -36,13 +36,14 @@ function Home() {
   const [datavisible, setDatavisible] = useState([]);
   const [filter, setFilter] = useState("");
   const [userinfo, setUserinfo] = useState();
+  const [sorttable ,setSorttable] = useState("");
   
-  const [childdata, setChilddata] = useState();
 
   const [profilehidetype ,setProfilehidetype]= useState("");
-  const [listchilddata, setListchilddata] = useState(new Map());
   const hideprofile = useSelector(state => state.profile.hide)
   const hideprice = useSelector(state => state.pricevs.hide)
+  const datastate = useSelector(state => state.datastate.data)
+ 
   const dispatch = useDispatch()
   
   //login
@@ -69,21 +70,31 @@ function Home() {
       } else {
         setFilter(e.target.value);
       }
-
+      
       filterdata();
     } else {
       setFilter(" ");
     }
   };
+  const sortmaintable = (d) =>{
+      if(sorttable === "price" && datastate.length !==0){
+        return d.sort((a,b) => datastate.get(b).price-datastate.get(a).price)
+      }else if(sorttable === "projection" && datastate.length !==0){
+        return d.sort((a,b) => datastate.get(b).projection-datastate.get(a).projection)
+      }else if(sorttable === "D" && datastate.length !==0){
+        return d.sort((a,b) => datastate.get(b).gainlose.D-datastate.get(a).gainlose.D)
+      }else if(sorttable === "W" && datastate.length !==0){
+        return d.sort((a,b) => datastate.get(b).gainlose.W-datastate.get(a).gainlose.W)
+      }else if(sorttable === "M" && datastate.length !==0){
+        return d.sort((a,b) => datastate.get(b).gainlose.M-datastate.get(a).gainlose.M)
+      }
+      return d
+  }
   const filterdata = () => {
     const regex = new RegExp("^" + filter, "gi");
-    setDatavisible(dataFragment.filter((value) => value.match(regex)));
+    setDatavisible(sortmaintable(dataFragment).filter((value) => value.match(regex)));
   };
-  useEffect(() => {
-    if (childdata) {
-      setListchilddata(listchilddata.set(childdata.name, childdata));
-    }
-  }, [childdata]);
+ 
 
   useEffect(() => {
     if (fetching) return;
@@ -117,10 +128,10 @@ function Home() {
     var D = 0;
     balance.map((value) => {
       total += value.totale;
-      if (listchilddata.has(value.cryptoName)) {
-        M += listchilddata.get(value.cryptoName).gainlose.M;
-        W += listchilddata.get(value.cryptoName).gainlose.W;
-        D += listchilddata.get(value.cryptoName).gainlose.D;
+      if (datastate.has(value.cryptoName)) {
+        M += datastate.get(value.cryptoName).gainlose.M;
+        W += datastate.get(value.cryptoName).gainlose.W;
+        D += datastate.get(value.cryptoName).gainlose.D;
       }
     });
     const hidepricefunc = () => {
@@ -165,12 +176,14 @@ function Home() {
                     avatar={getimage(value.cryptoName, "white", 25)}
                     title={
                       <div>
-                        <h4
+                        <a
                           className="ant-list-item-meta-title"
                           style={{ color: "white" }}
                         >
+                           <Link  style={{color: "white",background: "transparent"}} to={value.cryptoName}>
                           {value.cryptoName}
-                        </h4>
+                          </Link>
+                        </a>
                       </div>
                     }
                     description={
@@ -180,7 +193,7 @@ function Home() {
                       </p>
                     }
                   />
-                  {listchilddata.has(value.cryptoName) ? (
+                  {datastate.has(value.cryptoName) ? (
                     <List.Item.Meta
                       title={
                         <div>
@@ -196,12 +209,12 @@ function Home() {
                         <div>
                           <a
                             style={
-                              listchilddata.get(value.cryptoName).gainlose.M < 0
+                              datastate.get(value.cryptoName).gainlose.M < 0
                                 ? { color: "red" }
                                 : { color: "green" }
                             }
                           >
-                            {listchilddata
+                            {datastate
                               .get(value.cryptoName)
                               .gainlose.M.toFixed(2)
                               .toString()}
@@ -209,12 +222,12 @@ function Home() {
                           <a style={{ color: "white" }}> / </a>
                           <a
                             style={
-                              listchilddata.get(value.cryptoName).gainlose.W < 0
+                              datastate.get(value.cryptoName).gainlose.W < 0
                                 ? { color: "red" }
                                 : { color: "green" }
                             }
                           >
-                            {listchilddata
+                            {datastate
                               .get(value.cryptoName)
                               .gainlose.W.toFixed(2)
                               .toString()}
@@ -222,12 +235,12 @@ function Home() {
                           <a style={{ color: "white" }}> / </a>
                           <a
                             style={
-                              listchilddata.get(value.cryptoName).gainlose.D < 0
+                              datastate.get(value.cryptoName).gainlose.D < 0
                                 ? { color: "red" }
                                 : { color: "green" }
                             }
                           >
-                            {listchilddata
+                            {datastate
                               .get(value.cryptoName)
                               .gainlose.D.toFixed(2)
                               .toString()}
@@ -245,12 +258,13 @@ function Home() {
         </div>
         <div className="total" id="total">
         <List>
-            <List.Item key={"total"}>
-              <List.Item.Meta
+            <List.Item style={{marginTop:"10%"}} key={"total"}>
+              <List.Item.Meta 
                  className="text-sky-400"
                 title={
-                  <div>
-                    <h4 style={{ color: "white", marginTop: "2vh" }}>Total</h4>
+                  <div ><h4>
+                    <a style={{ color: "white", marginTop: "2vh" }}>Total</a>
+                    </h4>
                   </div>
                 }
                 description={
@@ -325,7 +339,7 @@ function Home() {
               {datavisible ? (
                 datavisible.map((cyptoname) => (
                   <Cryptoli
-                    passChildData={setChilddata}
+                    sort ={setSorttable}
                     key={cyptoname}
                     name={cyptoname}
                   />

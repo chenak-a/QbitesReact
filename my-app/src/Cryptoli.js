@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import { useQuery } from "urql";
 import { Link } from "react-router-dom";
 import "./Cryptoli.css";
+import { useSelector, useDispatch } from 'react-redux'
 
 const cyptoData = `
 query ($name: String!) {
@@ -33,7 +34,9 @@ query ($name: String!) {
 function Cryptoli(props) {
   const [item, setItem] = useState();
   const [previesPrice, setPreviesPrice] = useState();
-
+  const datastate = useSelector(state => state.datastate.data)
+  
+  const dispatch = useDispatch()
   const [result, reexecuteQuery] = useQuery({
     query: cyptoData,
     variables: { name: props.name },
@@ -59,8 +62,8 @@ function Cryptoli(props) {
     )}`;
   }
   useEffect(() => {
-    if (fetching || error) return;
-    if (data ) {
+    if (fetching ) return;
+    if (data !== null ) {
    
     
       let indexBUYSELLevel = data.crypto.data.length;
@@ -106,13 +109,22 @@ function Cryptoli(props) {
       );
      
 
-      props.passChildData(newvalue);
+    
         
        
       setItem(newvalue);
+      if(!datastate.has(newvalue.name)  || datastate.get(newvalue.name).price !== newvalue.price ){
+      
+        dispatch({
+          type: "datastate",
+              payload: datastate.set(newvalue.name,newvalue)
+        })
+        
+      }
+     
    
     }
-
+    
     // Set up to refetch in one second, if the query is idle
     const timerId = setTimeout(() => {
       reexecuteQuery({ requestPolicy: "network-only" });
@@ -129,13 +141,13 @@ function Cryptoli(props) {
         <List.Item.Meta
           
           avatar={getimage(item.name,"color",30)}
-          title={item.name}
+          title={<a onClick={() => {props.sort("")}}> {item.name}</a>}
           description={item.time}
         />
         <List.Item.Meta
-          title={<a>Price</a>}
+          title={<a onClick={() => {props.sort("price")}}>Price</a>}
           description={
-            <a
+            <a onClick={() => {props.sort("price")}}
               style={
                 previesPrice > item.price
                   ? { color: "red" }
@@ -147,9 +159,9 @@ function Cryptoli(props) {
           }
         />
         <List.Item.Meta
-          title={<a>Projection</a>}
+          title={<a onClick={() => {props.sort("projection")}}>Projection</a>}
           description={
-            <a
+            <a onClick={() => {props.sort("projection")}}
               style={
                 item.projection < 0 ? { color: "red" } : { color: "green" }
               }
@@ -162,21 +174,21 @@ function Cryptoli(props) {
           title={<a>M/W/D</a>}
           description={
             <div>
-              <a
+              <a onClick={() => {props.sort("M")}}
                 style={
                   item.gainlose.M < 0 ? { color: "red" } : { color: "green" }
                 }
               >
                 {item.gainlose.M.toFixed(2).toString() + "/"}
               </a>
-              <a
+              <a onClick={() => {props.sort("W")}}
                 style={
                   item.gainlose.W < 0 ? { color: "red" } : { color: "green" }
                 }
               >
                 {item.gainlose.W.toFixed(2).toString() + "/"}
               </a>
-              <a
+              <a onClick={() => {props.sort("D")}}
                 style={
                   item.gainlose.D < 0 ? { color: "red" } : { color: "green" }
                 }
