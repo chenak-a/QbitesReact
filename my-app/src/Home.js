@@ -269,7 +269,7 @@ function Home() {
                             style={
                               datastate.get(value.cryptoName).gainlose.M < 0
                                 ? { color: "red" }
-                                : { color: "green" }
+                                : datastate.get(value.cryptoName).gainlose.M > M ? { color: "green" } : { color: "yellow" } 
                             }
                           >
                             {datastate
@@ -282,7 +282,7 @@ function Home() {
                             style={
                               datastate.get(value.cryptoName).gainlose.W < 0
                                 ? { color: "red" }
-                                : { color: "green" }
+                                :  datastate.get(value.cryptoName).gainlose.W > W ? { color: "green" } : { color: "yellow" } 
                             }
                           >
                             {datastate
@@ -295,8 +295,8 @@ function Home() {
                           <a onClick={() =>setSortprofile("D")}
                             style={
                               datastate.get(value.cryptoName).gainlose.D < 0
-                                ? { color: "red" }
-                                : { color: "green" }
+                                ?  { color: "red" }
+                                : datastate.get(value.cryptoName).gainlose.D > D ? { color: "green" } : { color: "yellow" } 
                             }
                           >
                             {datastate
