@@ -182,11 +182,16 @@ function Home() {
     balance.map((value) => {
       total += value.totale;
       if (datastate.has(value.cryptoName)) {
-        M += datastate.get(value.cryptoName).gainlose.M;
-        W += datastate.get(value.cryptoName).gainlose.W;
-        D += datastate.get(value.cryptoName).gainlose.D;
+        console.log((datastate.get(value.cryptoName).gainlose.M)/100)
+        M += value.totale/(1+(datastate.get(value.cryptoName).gainlose.M/100));
+        W += value.totale/(1+(datastate.get(value.cryptoName).gainlose.W/100));
+        D += value.totale/(1+(datastate.get(value.cryptoName).gainlose.D/100));
       }
     });
+    M = ((total-M)/M)*100
+    W = ((total-W)/W)*100
+    D = ((total-D)/D)*100
+
     const hidepricefunc = () => {
     
      
