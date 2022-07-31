@@ -3,7 +3,6 @@
 
 [![npm](https://img.shields.io/badge/-npm-CB3837?logo=npm&logoColor=FFFFFF.)](https://www.npmjs.com/)
 [![react](https://img.shields.io/badge/-react-000000?logo=React&logoColor=FFFFFF.)](https://reactjs.org/)
-[![apollo graphql](https://img.shields.io/badge/-Apollo_graphql-311C87?logo=Apollo%20GraphQL&logoColor=FFFFFF.)](https://www.apollographql.com/)
 [![redux](https://img.shields.io/badge/-Redux-764ABC?logo=Redux&logoColor=FFFFFF.)](https://redux.js.org/)
 
 
