@@ -70,13 +70,17 @@ function Cryptoli(props) {
       let timesellget = "now";
       var BUYSELLevelget = "start the prayer ";
       let BYTSELL = data.crypto.data
-      for (
-        let i = data.crypto.data.length - 1;
-        BYTSELL[i].ai.other.BUYSELL !== 2.0 || i === 0;
-        --i
-      ) {
-        indexBUYSELLevel = i;
-      }
+      try {
+        for (
+          let i = data.crypto.data.length - 1;
+          BYTSELL[i].ai.other.BUYSELL !== 2.0 || i === 0;
+          --i
+        ) {
+          indexBUYSELLevel = i;
+        }
+      
+
+     
 
       if (data.crypto.data[indexBUYSELLevel - 1].ai.other.BUYSELLevel !== "") {
         BUYSELLevelget =
@@ -110,7 +114,7 @@ function Cryptoli(props) {
      
 
     
-        
+    }catch{}
        
       setItem(newvalue);
       if(!datastate.has(newvalue.name)  || datastate.get(newvalue.name).price !== newvalue.price ){
