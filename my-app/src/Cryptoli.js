@@ -114,7 +114,7 @@ function Cryptoli(props) {
      
 
     
-    }catch{}
+   
        
       setItem(newvalue);
       if(!datastate.has(newvalue.name)  || datastate.get(newvalue.name).price !== newvalue.price ){
@@ -125,7 +125,7 @@ function Cryptoli(props) {
         })
         
       }
-     
+    }catch{}
    
     }
     
