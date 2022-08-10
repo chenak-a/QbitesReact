@@ -1,6 +1,6 @@
 
 
-/*@media screen and (max-width: 1280px) {
+/* @media screen and (max-width: 1280px) {
   .Graph {
     transform: scale(1.03, 0.95) translateX(0%) translateY(-2%);
   }
@@ -20,4 +20,9 @@
     max-height: 85vh;
     max-width: 100vh;
   }
-}*/
+} */
+
+
+div > svg {
+  height: 2000px;
+}
