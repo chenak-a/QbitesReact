@@ -264,8 +264,8 @@ function Graph(props) {
        {loading && data !== null ? (
           <ChartCanvas
           
-            height={window.innerHeight*0.90}
-            margin={{ left: 80, right: 100, top: 20, bottom: 30 }}
+            height={window.innerHeight*0.70}
+            margin={{ left: 80, right: 100, top: 0, bottom:0 }}
             width={window.innerWidth}
   
             type={"svg"}
@@ -659,7 +659,7 @@ function Graph(props) {
             <Chart
               id={6}
               yExtents={(d) => d.aroonu / 100}
-              height={100}
+              height={150}
               origin={(w, h) => [0, h - 130]}
               p
             >
