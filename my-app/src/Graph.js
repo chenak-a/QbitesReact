@@ -51,9 +51,13 @@ function Graph(props) {
   const [hight, setHight] = useState();
   const [loading, setLoding] = useState(false);
   const [price, setPrice] = useState(0);
-  const initialdata = props.data;
+  
 
   useEffect(() => {
+
+
+
+    const initialdata = props.data;  
     var array = [];
 
     for (var value of initialdata.data) {
@@ -89,7 +93,12 @@ function Graph(props) {
     setData(array);
     setWidth(window.innerWidth);
     setLoding(true);
-    setPrice(initialdata.data[initialdata.data.length - 1].hcl.Close);
+    if(initialdata.data !== null){
+
+      setPrice(initialdata.data[initialdata.data.length - 1].hcl.Close);
+    }
+
+  
   }, [props.data]);
 
 

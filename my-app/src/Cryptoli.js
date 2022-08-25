@@ -135,7 +135,7 @@ function Cryptoli(props) {
     }, 1000);
 
     return () => clearTimeout(timerId);
-  }, [fetching, reexecuteQuery, props.name]);
+  }, [fetching, reexecuteQuery, props.name,error]);
 
   
 
