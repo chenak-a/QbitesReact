@@ -51,9 +51,13 @@ function Graph(props) {
   const [hight, setHight] = useState();
   const [loading, setLoding] = useState(false);
   const [price, setPrice] = useState(0);
-  const initialdata = props.data;
+  
 
   useEffect(() => {
+
+
+
+    const initialdata = props.data;  
     var array = [];
 
     for (var value of initialdata.data) {
@@ -89,7 +93,12 @@ function Graph(props) {
     setData(array);
     setWidth(window.innerWidth);
     setLoding(true);
-    setPrice(initialdata.data[initialdata.data.length - 1].hcl.Close);
+    if(initialdata.data !== null){
+
+      setPrice(initialdata.data[initialdata.data.length - 1].hcl.Close);
+    }
+
+  
   }, [props.data]);
 
 
@@ -237,7 +246,7 @@ function Graph(props) {
       <>
         <LineSeries
           yAccessor={(d) => d.ci}
-          stroke={"#657a00"}
+          stroke={"#FF4136"}
           style={display15 ? { display: "none" } : { display: "" }}
         />
 
@@ -245,13 +254,13 @@ function Graph(props) {
           onClick={() => setDisplay15(!display15)}
           yAccessor={(d) => d.ci}
           yLabel={`ci`}
-          valueFill="#657a00"
+          valueFill="#FF4136"
           yDisplayFormat={format(".2f")}
-          origin={[30, 3]}
+          origin={[100, 3]}
         />
         <CurrentCoordinate
           yAccessor={(d) => d.ci}
-          fill={!display15 ? "#657a00" : "#FFFFFF"}
+          fill={!display15 ? "#FF4136" : "#FFFFFF"}
         />
       </>
     );
@@ -260,10 +269,10 @@ function Graph(props) {
   
   return (
     
-    <div className="graph" id="graph">
+    <div className="graph" id="graph" >
        {loading && data !== null ? (
           <ChartCanvas
-          
+          className="graph" id="graph"
             height={window.innerHeight*0.90}
             margin={{ left: 80, right: 100, top: 20, bottom: 30 }}
             width={window.innerWidth}
@@ -347,6 +356,7 @@ function Graph(props) {
               origin={(w, h) => [0, h - 630]}
               padding={{ top: 10, bottom: 10 }}
             >
+                {ciChart()}
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
 
               <LineSeries
@@ -641,7 +651,7 @@ function Graph(props) {
               <YAxis axisAt="right" orient="right" ticks={3} {...yGrid} />
               {rsikChart()}
               {ambb5Chart()}
-              {ciChart()}
+            
               <XAxis
                 axisAt="bottom"
                 orient="bottom"

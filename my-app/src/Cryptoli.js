@@ -114,7 +114,7 @@ function Cryptoli(props) {
      
 
     
-    }catch{}
+   
        
       setItem(newvalue);
       if(!datastate.has(newvalue.name)  || datastate.get(newvalue.name).price !== newvalue.price ){
@@ -125,7 +125,7 @@ function Cryptoli(props) {
         })
         
       }
-     
+    }catch{}
    
     }
     
@@ -135,7 +135,7 @@ function Cryptoli(props) {
     }, 1000);
 
     return () => clearTimeout(timerId);
-  }, [fetching, reexecuteQuery, props.name]);
+  }, [fetching, reexecuteQuery, props.name,error]);
 
   
 

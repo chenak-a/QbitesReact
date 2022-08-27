@@ -98,7 +98,7 @@ function Dashbord() {
   useEffect(() => {
     if (fetching) return;
     if (error) navigate.push("/");
-    if (data) setOld(data.crypto);
+    if (data !== null) setOld(data.crypto);
 
     const timerId = setTimeout(() => {
       reexecuteQuery({ requestPolicy: "network-only" });
@@ -115,7 +115,7 @@ function Dashbord() {
         </h2>
       </Card.Body>
        <div className="raper" id="raper">
-      {oldData ? (
+      {oldData  ? (
           <Graph
             style={{ transition: "scale 1s" }}
             key={oldData}
